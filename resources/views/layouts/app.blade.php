@@ -27,7 +27,7 @@
     <div id="app">
 
         @include('inc.navbar')
-        <main class="container mt-4">
+        <main class="container-fluid mt-4">
             @yield('content')
         </main>
         {{-- Success Alert --}}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::middleware(['Admin'])->group(function () {
+    Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('user', 'UserController');
+    });
+});
+
+//Route::resource('admin', );
 
 // Route::prefix('/student')->name('student.')->namespace('Student')->group(function () {
 //     Route::get('/dashboard', 'HomeController@index')->name('home');
