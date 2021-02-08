@@ -13,9 +13,19 @@
                 <!-- Authentication Links -->
                 @if(Auth::guard('web')->check())
                 <li class="nav-item dropdown">
+                    @if(Auth::guard('web')->user()->type == 0)
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::guard('web')->user()->fname }} <span class="caret"></span>
+                        {{ Auth::guard('web')->user()->fname }} (Student)<span class="caret"></span>
                     </a>
+                    @elseif(Auth::guard('web')->user()->type == 1)
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::guard('web')->user()->fname }} (Teacher)<span class="caret"></span>
+                    </a>
+                    @else
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::guard('web')->user()->fname }} (Admin)<span class="caret"></span>
+                    </a>
+                    @endif
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a href="{{route('home')}}" class="dropdown-item">Dashboard</a>
                         <a class="dropdown-item" href="#" onclick="event.preventDefault();document.querySelector('#logout-form').submit();">

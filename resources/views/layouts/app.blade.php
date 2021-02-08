@@ -55,7 +55,7 @@
             $(document).ready(function() {
                 setTimeout(function() {
                     $(".alert").alert('close');
-                }, 500);
+                }, 1500);
             });
         </script>
     </div>
