@@ -43,7 +43,7 @@ class LoginController extends Controller
     {
         // type 1 : custom student maybe
         return view('auth.login', [
-            'title' => 'Normal Login',
+            'title' => 'Login',
             'loginRoute' => 'login',
             'forgotPasswordRoute' => 'password.request',
             'loginType' => '0'

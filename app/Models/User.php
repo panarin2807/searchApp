@@ -11,13 +11,29 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    const ADMIN_TYPE = 2;
+    const TEACHER_TYPE = 1;
+    const DEFAULT_TYPE = 0;
+
+    public function isAdmin()
+    {
+        $this->type == self::ADMIN_TYPE ? true : false;
+    }
+
+    public function isTeacher()
+    {
+        $this->type == self::TEACHER_TYPE ? true : false;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name',
+        'fname',
+        'lname',
+        'username',
         'email',
         'password',
     ];

@@ -8,7 +8,7 @@
                 <div class="card-header">{{ $title}}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route($registerType == '1' ? 'student.register' : 'register') }}">
+                    <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row">

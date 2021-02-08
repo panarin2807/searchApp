@@ -13,6 +13,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -50,11 +52,10 @@
 
         <script>
             //close the alert after 3 seconds.
-            document.addEventListener("DOMContentLoaded", function(event) {
+            $(document).ready(function() {
                 setTimeout(function() {
-                    //document.getElementsByClassName('alert').alert('close');
-                    //$(".alert").alert('close');
-                }, 3000);
+                    $(".alert").alert('close');
+                }, 500);
             });
         </script>
     </div>

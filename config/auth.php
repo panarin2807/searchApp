@@ -55,6 +55,11 @@ return [
         'personel' => [
             'driver' => 'session',
             'provider' => 'personels',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins'
         ]
     ],
 
@@ -90,6 +95,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Personel::class,
         ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Personel::class,
+        ]
     ],
 
     /*
@@ -124,6 +134,13 @@ return [
 
         'personels' => [
             'provider' => 'personels',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
