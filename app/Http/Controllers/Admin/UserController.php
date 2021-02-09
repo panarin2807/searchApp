@@ -31,7 +31,7 @@ class UserController extends Controller
     public function create()
     {
         $types = UserType::all();
-        return view('admin.user.create',['types' => $types]);
+        return view('admin.user.create', ['types' => $types]);
     }
 
     /**
@@ -98,6 +98,7 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        return view('admin.user.edit', ['user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
     }
 
     /**
@@ -110,6 +111,45 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        if ($request->filled('password')) {
+            $request->validate([
+                'fname' => 'required|string|max:100',
+                'lname' => 'required|string|max:100',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'username' => 'required|string|min:6|max:100|unique:users,username,' . $id,
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+        } else {
+            $request->validate([
+                'fname' => 'required|string|max:100',
+                'lname' => 'required|string|max:100',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'username' => 'required|string|min:6|max:100|unique:users,username,' . $id,
+            ]);
+        }
+
+        $user = User::find($id);
+
+        $user->fname = $request->get('fname');
+        $user->lname = $request->get('lname');
+        $user->email = $request->get('email');
+        $user->username = $request->get('username');
+        $user->type = $request->get('type') ?? 0;
+        if ($request->filled('password'))
+            $user->password = Hash::make(
+                $request->get('password')
+            );
+
+        $message = '';
+
+        if ($user->save()) {
+            $message = 'แก้ไขข้อมูลสำเร็จ';
+        } else {
+            $message = 'แก้ไขข้อมูลล้มเหลว โปรดลองใหม่ภายหลัง';
+        }
+
+        return back()->with('status', $message);
     }
 
     /**

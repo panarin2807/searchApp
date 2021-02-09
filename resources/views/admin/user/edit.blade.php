@@ -12,15 +12,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form method="POST" action="{{ route('admin.user.store') }}">
+                <form method="POST" action="{{ route('admin.user.update', $user->id) }}">
                     @csrf
+                    {{ method_field('PUT') }}
 
                     <div class="form-group row">
                         <label for="fname" class="col-md-4 col-form-label text-md-right">{{ __('First name') }}</label>
 
                         <div class="col-md-6">
                             <input id="fname" type="text" class="form-control @error('fname') is-invalid @enderror"
-                                name="fname" value="{{ old('fname') }}" required autofocus>
+                                name="fname" value="{{ old('fname') ?? $user->fname }}" required autofocus>
 
                             @error('fname')
                                 <span class="invalid-feedback" role="alert">
@@ -35,7 +36,7 @@
 
                         <div class="col-md-6">
                             <input id="lname" type="text" class="form-control @error('lname') is-invalid @enderror"
-                                name="lname" value="{{ old('lname') }}" required autofocus>
+                                name="lname" value="{{ old('lname') ?? $user->lname }}" required autofocus>
 
                             @error('lname')
                                 <span class="invalid-feedback" role="alert">
@@ -51,7 +52,7 @@
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email">
+                                name="email" value="{{ old('email') ?? $user->email }}" required autocomplete="email">
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -66,7 +67,7 @@
 
                         <div class="col-md-6">
                             <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
-                                name="username" value="{{ old('username') }}" required autofocus>
+                                name="username" value="{{ old('username') ?? $user->username }}" required autofocus>
 
                             @error('username')
                                 <span class="invalid-feedback" role="alert">
@@ -81,7 +82,7 @@
 
                         <div class="col-md-6">
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                class="form-control @error('password') is-invalid @enderror" name="password"
                                 autocomplete="new-password">
 
                             @error('password')
@@ -98,7 +99,7 @@
 
                         <div class="col-md-6">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password">
+                                autocomplete="new-password">
                         </div>
                     </div>
 

@@ -17,7 +17,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->type == 2) return $next($request);
+        if (Auth::user()->type == 2) return $next($request);
         else abort(403, 'Unauthorized');
     }
 }
