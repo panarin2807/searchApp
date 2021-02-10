@@ -8,10 +8,14 @@
 </p>
 
 ## How to install
-- Clone this Repo
-- cd to searchApp-Main
+- Download project
+- เปิด cmd / terminal
+- cd ไปที่ project folder
 - run composer install && npm install
-- run php artisan migrate or php artisan migrate:fresh if you want to reset all db
+- run npm run dev
+- แก้ไขไฟล์ .env.example และเปลี่ยนชื่อไฟล์เป็น .env
+- run php artisan migrate:fresh --seed
+- run php artisan key:generate
 - finally run php artisan serve
 
 ## About Laravel
