@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -18,9 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $students = User::where('type', 0)->get();
-        $teacher = User::where('type', 1)->get();
-        return view('admin.user.index', ['students' => $students, 'teachers' => $teacher]);
+        //
     }
 
     /**
@@ -30,8 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $types = UserType::all();
-        return view('admin.user.create', ['types' => $types]);
+        //
     }
 
     /**
@@ -42,39 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validator($request->all())->validate();
-
-        $user = new User();
-
-        $user->fname = $request->get('fname');
-        $user->lname = $request->get('lname');
-        $user->email = $request->get('email');
-        $user->username = $request->get('username');
-        $user->type = $request->get('type') ?? 0;
-        $user->password = Hash::make(
-            $request->get('password')
-        );
-
-        $message = '';
-
-        if ($user->save()) {
-            $message = 'เพิ่มข้อมูลสำเร็จ';
-        } else {
-            $message = 'เพิ่มข้อมูลล้มเหลว โปรดลองใหม่ภายหลัง';
-        }
-
-        return back()->with('status', $message);
-    }
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'fname' => ['required', 'string', 'max:100'],
-            'lname' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-            'username' => ['required', 'string', 'min:6', 'max:100', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        //
     }
 
     /**
@@ -86,7 +49,6 @@ class UserController extends Controller
     public function show($id)
     {
         //
-        //return view('admin.user.index');
     }
 
     /**
@@ -98,7 +60,7 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        return view('admin.user.edit', ['user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
+        return view('setting', ['user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
     }
 
     /**
@@ -111,13 +73,11 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-
         if ($request->filled('password')) {
             $request->validate([
                 'fname' => 'required|string|max:100',
                 'lname' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'username' => 'required|string|min:6|max:100|unique:users,username,' . $id,
                 'password' => 'required|string|min:6|confirmed',
             ]);
         } else {
@@ -125,7 +85,6 @@ class UserController extends Controller
                 'fname' => 'required|string|max:100',
                 'lname' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'username' => 'required|string|min:6|max:100|unique:users,username,' . $id,
             ]);
         }
 
@@ -134,8 +93,6 @@ class UserController extends Controller
         $user->fname = $request->get('fname');
         $user->lname = $request->get('lname');
         $user->email = $request->get('email');
-        $user->username = $request->get('username');
-        $user->type = $request->get('type') ?? 0;
         if ($request->filled('password'))
             $user->password = Hash::make(
                 $request->get('password')
@@ -161,15 +118,5 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-        $user = User::find($id);
-        $user->status = !$user->status;
-        $message = '';
-
-        if ($user->save()) {
-            $message = 'แก้ไขข้อมูล Username : '.$user->username.' เรียบร้อย';
-        } else {
-            $message = 'แก้ไขข้อมูลล้มเหลว โปรดลองใหม่ภายหลัง';
-        }
-        return back()->with('status', $message);
     }
 }

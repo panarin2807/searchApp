@@ -1,18 +1,14 @@
 @extends('layouts.admin.app')
 
-@section('title')
-    Create User
-@endsection
+@section('title', 'ACCOUNT SETTING')
 
-@section('header')
-    Create User
-@endsection
+@section('header', 'ACCOUNT SETTING')
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form method="POST" action="{{ route('admin.user.update', $user->id) }}">
+                <form method="POST" action="{{ route('user.update', $user->id) }}">
                     @csrf
                     {{ method_field('PUT') }}
 
@@ -63,21 +59,6 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
-                                name="username" value="{{ old('username') ?? $user->username }}" required autofocus>
-
-                            @error('username')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                         <div class="col-md-6">
@@ -103,28 +84,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="user-type-select" class="col-md-4 col-form-label text-md-right">User Type</label>
-
-                        <div class="col-md-6">
-                            <select name="type" class="form-control">
-                                @foreach ($types as $item)
-                                    @if ($item->type == $user->type)
-                                        <option value="{{ $item->type }}" selected>{{ $item->name }}</option>
-                                    @else
-                                        <option value="{{ $item->type }}">{{ $item->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-
-
                     <div class="container">
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">บันทึก</button>
-                            <a href="{{ URL::to('admin/user') }}" class="btn btn-ligth">กลับ</a>
+                            <a href="{{route('home')}}" class="btn btn-ligth">กลับ</a>
                         </div>
                     </div>
             </div>

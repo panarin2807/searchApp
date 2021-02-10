@@ -12,6 +12,9 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @if(Auth::guard('web')->check())
+                @if (Auth::guard('web')->user()->type == 2)
+                    <a href="{{ URL::to('admin/user') }}" class="nav-link">USER MANAGEMENT</a>
+                @endif
                 <li class="nav-item dropdown">
                     @if(Auth::guard('web')->user()->type == 0)
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -28,6 +31,9 @@
                     @endif
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a href="{{route('home')}}" class="dropdown-item">Dashboard</a>
+                        @if (Auth::guard('web')->user()->type != 2)
+                        <a href="{{ url('user/' . Auth::guard('web')->user()->id . '/edit') }}" class="dropdown-item">Account Setting</a>
+                        @endif
                         <a class="dropdown-item" href="#" onclick="event.preventDefault();document.querySelector('#logout-form').submit();">
                             Logout
                         </a>
