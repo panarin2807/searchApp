@@ -12,4 +12,8 @@ class Group extends Model
     protected $fillable = [
         'name', 'detail'
     ];
+
+    public function projects() {
+        return $this->hasMany(\App\Models\Project::class);
+   }
 }

@@ -16,6 +16,7 @@
 - แก้ไขไฟล์ .env.example และเปลี่ยนชื่อไฟล์เป็น .env
 - run php artisan migrate:fresh --seed
 - run php artisan key:generate
+- run php artisan storage:link
 - finally run php artisan serve
 
 ## About Laravel

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProjectRela;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -17,9 +18,13 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeed::class,
+            ConfigSeeder::class,
             UserTypeSeed::class,
             GroupSeeder::class,
             CurriculumSeeder::class,
+            ProjectSeed::class,
+            ProjectRelaSeed::class,
+            ProjectFileSeeder::class,
         ]);
     }
 }

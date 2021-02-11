@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectRela extends Model
+class ProjectFile extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function config()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Config::class);
     }
 }

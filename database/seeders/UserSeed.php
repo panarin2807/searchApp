@@ -18,8 +18,8 @@ class UserSeed extends Seeder
     {
         //
         DB::table('users')->insert([
-            'fname' => 'Student',
-            'lname' => 'Test',
+            'fname' => 'ภานรินทร์',
+            'lname' => 'อิ่นแก้ว',
             'email' => 'student@gmail.com',
             'username' => 'student',
             'password' => Hash::make('123456'),
@@ -27,8 +27,17 @@ class UserSeed extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'fname' => 'Teacher',
-            'lname' => 'Test',
+            'fname' => 'พุธิตา',
+            'lname' => 'เจือจันทร์',
+            'email' => 'student2@gmail.com',
+            'username' => 'student2',
+            'password' => Hash::make('123456'),
+            'type' => 0
+        ]);
+
+        DB::table('users')->insert([
+            'fname' => 'วิชุดา',
+            'lname' => 'ไชยศิวามงคล',
             'email' => 'teacher@gmail.com',
             'username' => 'teacher',
             'password' => Hash::make('123456'),
