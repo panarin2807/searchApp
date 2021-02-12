@@ -58,12 +58,12 @@ $teacherCount = 0;
         <div class="col-9">
             {{ $project->advisor_joint }}
         </div>
-        <div class="col-3">
+        {{-- <div class="col-3">
             Fulltext :
         </div>
         <div class="col-9">
             <a href="#" id="show-full-text">กดเพื่อแสดง Fulltext</a>
-        </div>
+        </div> --}}
         <div class="col-3"></div>
         <div class="col-9" id="fulltext" style="display: none">
             <a href="#">ส่วนหน้า</a><br />

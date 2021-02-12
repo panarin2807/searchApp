@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
-        'status'
+        'status',
+        'prefix_id'
     ];
 
     /**
@@ -44,4 +45,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function prefix(){
+        return $this->belongsTo(Prefix::class);
+    }
 }

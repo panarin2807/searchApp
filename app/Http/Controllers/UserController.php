@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prefix;
 use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        return view('setting', ['user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
+        return view('setting', ['prefixes' => Prefix::all(),'user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
     }
 
     /**
@@ -75,6 +76,7 @@ class UserController extends Controller
         //
         if ($request->filled('password')) {
             $request->validate([
+                'prefix' => 'required',
                 'fname' => 'required|string|max:100',
                 'lname' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
@@ -82,6 +84,7 @@ class UserController extends Controller
             ]);
         } else {
             $request->validate([
+                'prefix' => 'required',
                 'fname' => 'required|string|max:100',
                 'lname' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
@@ -90,6 +93,7 @@ class UserController extends Controller
 
         $user = User::find($id);
 
+        $user->prefix_id = $request->get('prefix');
         $user->fname = $request->get('fname');
         $user->lname = $request->get('lname');
         $user->email = $request->get('email');

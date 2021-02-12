@@ -20,6 +20,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'ภานรินทร์',
             'lname' => 'อิ่นแก้ว',
+            'prefix_id' => 3,
             'email' => 'student@gmail.com',
             'username' => 'student',
             'password' => Hash::make('123456'),
@@ -29,6 +30,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'พุธิตา',
             'lname' => 'เจือจันทร์',
+            'prefix_id' => 3,
             'email' => 'student2@gmail.com',
             'username' => 'student2',
             'password' => Hash::make('123456'),
@@ -38,6 +40,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'วิชุดา',
             'lname' => 'ไชยศิวามงคล',
+            'prefix_id' => 3,
             'email' => 'teacher@gmail.com',
             'username' => 'teacher',
             'password' => Hash::make('123456'),
@@ -47,6 +50,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'Admin',
             'lname' => 'Admin',
+            'prefix_id' => 1,
             'email' => 'admin@gmail.com',
             'username' => 'adminadmin',
             'password' => Hash::make('123456'),

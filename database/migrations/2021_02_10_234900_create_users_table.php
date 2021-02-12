@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->foreignId('prefix_id')->constrained('prefixes');
             $table->string('fname', 100);
             $table->string('lname', 100);
             $table->string('username', 100)->unique();

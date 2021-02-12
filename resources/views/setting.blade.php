@@ -13,6 +13,21 @@
                     {{ method_field('PUT') }}
 
                     <div class="form-group row">
+                        <label for="" class="col-md-4 col-form-label text-md-right">คำนำหน้า : </label>
+                        <div class="col-md-6">
+                            <select name="prefix" class="form-control @error('prefix') is-invalid @enderror">
+                                @foreach ($prefixes as $key => $item)
+                                    @if ($item->id == $user->prefix->id)
+                                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label for="fname" class="col-md-4 col-form-label text-md-right">{{ __('First name') }}</label>
 
                         <div class="col-md-6">
@@ -87,7 +102,7 @@
                     <div class="container">
                         <div class="col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">บันทึก</button>
-                            <a href="{{route('home')}}" class="btn btn-ligth">กลับ</a>
+                            <a href="{{ route('home') }}" class="btn btn-ligth">กลับ</a>
                         </div>
                     </div>
             </div>

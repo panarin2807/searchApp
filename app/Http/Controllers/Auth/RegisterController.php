@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Prefix;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -50,6 +51,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'prefix' => ['required'],
             'fname' => ['required', 'string', 'max:100'],
             'lname' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
@@ -67,6 +69,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'prefix_id' => $data['prefix'],
             'fname' => $data['fname'],
             'lname' => $data['lname'],
             'email' => $data['email'],
@@ -77,10 +80,12 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
+        $prefixes = Prefix::all();
         return view('auth.register', [
             'title' => 'Register',
             'registerRoute' => 'register',
-            'registerType' => '0'
+            'registerType' => '0',
+            'prefixes' => $prefixes
         ]);
     }
 }

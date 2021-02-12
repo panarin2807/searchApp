@@ -16,6 +16,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>#</th>
+                    <th>คำนำหน้า</th>
                     <th>ชื่อ</th>
                     <th>นามสกุล</th>
                     <th>E-mail</th>
@@ -27,6 +28,7 @@
                 @foreach ($students as $key => $val)
                     <tr>
                         <td>{{ $key + 1 }}</td>
+                        <td>{{ $val->prefix->name }}</td>
                         <td>{{ $val->fname }}</td>
                         <td>{{ $val->lname }}</td>
                         <td>{{ $val->email }}</td>
@@ -62,6 +64,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>#</th>
+                    <th>คำนำหน้า</th>
                     <th>ชื่อ</th>
                     <th>นามสกุล</th>
                     <th>E-mail</th>
@@ -73,6 +76,7 @@
                 @foreach ($teachers as $key => $val)
                     <tr>
                         <td>{{ $key + 1 }}</td>
+                        <td>{{ $val->prefix->name }}</td>
                         <td>{{ $val->fname }}</td>
                         <td>{{ $val->lname }}</td>
                         <td>{{ $val->email }}</td>

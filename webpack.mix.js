@@ -19,3 +19,18 @@ mix.copyDirectory(
     "node_modules/@fortawesome/fontawesome-free/webfonts",
     "public/webfonts"
 );
+
+// mix.scripts(
+//     [
+//         "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+//         "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
+//     ],
+//     "public/js/app.js"
+// )
+// .styles(
+//     [
+//         "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+//         "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
+//     ],
+//     "public/css/app.css"
+// );

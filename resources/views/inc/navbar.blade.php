@@ -14,9 +14,9 @@
                 <!-- Authentication Links -->
                 @if (Auth::guard('web')->check())
                     @if (Auth::guard('web')->user()->type == 2)
-                        <a href="{{ URL::to('admin/user') }}" class="nav-link">USER MANAGEMENT</a>
+                        <a href="{{ URL::to('admin/user') }}" class="nav-link">จัดการผู้ใช้</a>
                     @endif
-                    {{-- <a href="#" class="nav-link">USER MANAGEMENT</a> --}}
+                    <a href="{{ route('project.create') }}" class="nav-link">เพิ่มโครงงาน</a>
                     <li class="nav-item dropdown">
                         @if (Auth::guard('web')->user()->type == 0)
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

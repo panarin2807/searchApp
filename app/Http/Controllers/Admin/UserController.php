@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Prefix;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserType;
@@ -31,7 +32,7 @@ class UserController extends Controller
     public function create()
     {
         $types = UserType::all();
-        return view('admin.user.create', ['types' => $types]);
+        return view('admin.user.create', ['prefixes' => Prefix::all(), 'types' => $types]);
     }
 
     /**
@@ -46,6 +47,7 @@ class UserController extends Controller
 
         $user = new User();
 
+        $user->prefix_id = $request->get('prefix');
         $user->fname = $request->get('fname');
         $user->lname = $request->get('lname');
         $user->email = $request->get('email');
@@ -69,6 +71,7 @@ class UserController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'prefix' => ['required'],
             'fname' => ['required', 'string', 'max:100'],
             'lname' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
@@ -98,7 +101,7 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        return view('admin.user.edit', ['user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
+        return view('admin.user.edit', ['prefixes' => Prefix::all(), 'user' => User::findOrFail($id), 'types' => UserType::where('type', '!=', 2)->get()]);
     }
 
     /**
@@ -114,6 +117,7 @@ class UserController extends Controller
 
         if ($request->filled('password')) {
             $request->validate([
+                'prefix' => 'required',
                 'fname' => 'required|string|max:100',
                 'lname' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
@@ -122,6 +126,7 @@ class UserController extends Controller
             ]);
         } else {
             $request->validate([
+                'prefix' => 'required',
                 'fname' => 'required|string|max:100',
                 'lname' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
@@ -131,6 +136,7 @@ class UserController extends Controller
 
         $user = User::find($id);
 
+        $user->prefix_id = $request->get('prefix');
         $user->fname = $request->get('fname');
         $user->lname = $request->get('lname');
         $user->email = $request->get('email');
@@ -166,7 +172,7 @@ class UserController extends Controller
         $message = '';
 
         if ($user->save()) {
-            $message = 'แก้ไขข้อมูล Username : '.$user->username.' เรียบร้อย';
+            $message = 'แก้ไขข้อมูล Username : ' . $user->username . ' เรียบร้อย';
         } else {
             $message = 'แก้ไขข้อมูลล้มเหลว โปรดลองใหม่ภายหลัง';
         }
