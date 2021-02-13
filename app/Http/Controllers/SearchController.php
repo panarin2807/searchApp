@@ -5,36 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Curriculum;
 use App\Models\Group;
 use App\Models\Project;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
-class HomeController extends Controller
+class SearchController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    //
+    public function getSearch(Request $request)
     {
-        $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        $currs = Curriculum::where('status', 1)->get();
-        $groups = Group::where('status', 1)->get();
-        //$projects = Project::where('status', 1)->orderBy('created_at', 'desc')->take(5)->get();
-        $fields = ['name_th' => 'ชื่อภาษาไทย', 'name_en' => 'ชื่อภาษาอังกฤษ', 'abstract' => 'บทคัดย่อ'];
-        return view('home', ['projects' => [], 'currs' => $currs, 'groups' => $groups, 'fields' => $fields]);
-    }
-
-    public function search(Request $request)
-    {
         $rule = [
             'keyword' => 'required|string',
             'curr' => 'required',
@@ -60,19 +40,24 @@ class HomeController extends Controller
         $end = $request->get('end'); //where between
         $keyword = $request->get('keyword'); //where like
         $column = $request->get('column'); //
-        
+
+        //return back()->with('status','Column : '.json_encode($column));
+
+        //$projects = Project::where('status', 1)->get();
         $currs = Curriculum::where('status', 1)->get();
         $groups = Group::where('status', 1)->get();
         $fields = ['name_th' => 'ชื่อภาษาไทย', 'name_en' => 'ชื่อภาษาอังกฤษ', 'abstract' => 'บทคัดย่อ'];
-        $projects = Project::where(function ($q) use ($column, $keyword, $group, $curr, $start, $end) {
-            $q->where('status', 1);
-            foreach ($column as $col) {
-                $q->orWhere($col, 'like', '%' . $keyword . '%');
-            }
-            $q->whereBetween('year', [$start, $end]);
-            $q->whereIn('group_id', $group);
-            $q->whereIn('curricula_id', $curr);
-        })->get();
+        $projects = Project::where('status', 1)
+            ->whereBetween('year', [$start, $end])
+            ->whereIn('group_id', $group)
+            ->whereIn('curricula_id', $curr)
+            ->where(function ($q) use ($column, $keyword) {
+                foreach ($column as $col) {
+                    $q->orWhere($col, 'like', '%' . $keyword . '%');
+                }
+            })->get();
+
+        //return back()->with('sql',$projects);
 
         return view('home', compact('projects', 'currs', 'groups', 'fields'));
     }

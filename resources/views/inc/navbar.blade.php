@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ url('/home') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -15,6 +15,7 @@
                 @if (Auth::guard('web')->check())
                     @if (Auth::guard('web')->user()->type == 2)
                         <a href="{{ URL::to('admin/user') }}" class="nav-link">จัดการผู้ใช้</a>
+                        {{-- <a href="{{ route('admin.setting') }}" class="nav-link">ตั้งค่า Config</a> --}}
                     @endif
                     <a href="{{ route('project.create') }}" class="nav-link">เพิ่มโครงงาน</a>
                     <li class="nav-item dropdown">

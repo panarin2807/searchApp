@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $projects = Project::all();
+        $projects = Project::where('status', 1)->get();
         //$groups = Group::findOrFail(4));
         return view('project.index', ['projects' => $projects]);
     }
@@ -36,8 +36,8 @@ class ProjectController extends Controller
         $students = User::where('type', 0)->get();
         $teachers = User::where('type', 1)->get();
         $configs = Config::where('status', 1)->get();
-        $curr = Curriculum::all();
-        $groups = Group::all();
+        $curr = Curriculum::where('status', 1)->get();
+        $groups = Group::where('status', 1)->get();
         return view('project.create', ['students' => $students, 'teachers' => $teachers, 'configs' => $configs, 'curr' => $curr, 'groups' => $groups]);
     }
 

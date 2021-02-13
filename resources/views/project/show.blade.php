@@ -38,7 +38,7 @@ $teacherCount = 0;
                     นักศึกษาคนที่ {{ $studentCount }} :
                 </div>
                 <div class="col-9">
-                    {{ $rela->user->fname }} {{ $rela->user->lname }}
+                    {{$rela->user->prefix->name}}{{ $rela->user->fname }} {{ $rela->user->lname }}
                 </div>
             @else
                 @php
@@ -48,7 +48,7 @@ $teacherCount = 0;
                     อาจารย์ที่ปรึกษาหลักคนที่ {{ $teacherCount }} :
                 </div>
                 <div class="col-9">
-                    {{ $rela->user->fname }} {{ $rela->user->lname }}
+                    {{$rela->user->prefix->name}}{{ $rela->user->fname }} {{ $rela->user->lname }}
                 </div>
             @endif
         @endforeach

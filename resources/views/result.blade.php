@@ -5,7 +5,7 @@
 @endsection
 
 @section('header')
-    ค้นหาโครงงาน
+    ผลการค้นหา
 @endsection
 
 @section('content')
