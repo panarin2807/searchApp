@@ -32,7 +32,7 @@
 
                                 <div class="col-md-6">
                                     <input id="fname" type="text" class="form-control @error('fname') is-invalid @enderror"
-                                        name="fname" value="{{ old('fname') }}" required autofocus>
+                                        name="fname" value="{{ old('fname') }}"  autofocus>
 
                                     @error('fname')
                                         <span class="invalid-feedback" role="alert">
@@ -48,7 +48,7 @@
 
                                 <div class="col-md-6">
                                     <input id="lname" type="text" class="form-control @error('lname') is-invalid @enderror"
-                                        name="lname" value="{{ old('lname') }}" required autofocus>
+                                        name="lname" value="{{ old('lname') }}"  autofocus>
 
                                     @error('lname')
                                         <span class="invalid-feedback" role="alert">
@@ -64,7 +64,7 @@
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        name="email" value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                 <div class="col-md-6">
                                     <input id="username" type="text"
                                         class="form-control @error('username') is-invalid @enderror" name="username"
-                                        value="{{ old('username') }}" required autofocus>
+                                        value="{{ old('username') }}"  autofocus>
 
                                     @error('username')
                                         <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                         autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                        name="password_confirmation"  autocomplete="new-password">
                                 </div>
                             </div>
 

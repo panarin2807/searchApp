@@ -17,6 +17,18 @@
                         <a href="{{ URL::to('admin/user') }}" class="nav-link">จัดการผู้ใช้</a>
                         {{-- <a href="{{ route('admin.setting') }}" class="nav-link">ตั้งค่า Config</a> --}}
                     @endif
+                    @if (Auth::guard('web')->user()->type == 1)
+                        <li class="nav-item dropdown">
+                            <a href="#" id="reportDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" v-pre>รายงาน</a>
+
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportDropdown">
+                                <a href="{{ route('reportGroup') }}" class="dropdown-item">รายงานแยกตามหมวดหมู่</a>
+                                <a href="{{ route('reportTeacher') }}" class="dropdown-item">รายงานแยกตามที่ปรึกษา</a>
+                            </div>
+                        </li>
+                    @endif
                     <a href="{{ route('project.create') }}" class="nav-link">เพิ่มโครงงาน</a>
                     <li class="nav-item dropdown">
                         @if (Auth::guard('web')->user()->type == 0)
@@ -55,9 +67,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">Register</a>
-                    </li>
+                    </li> --}}
                 @endif
             </ul>
         </div>

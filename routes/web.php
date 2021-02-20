@@ -28,6 +28,8 @@ Route::middleware(['auth', 'Admin'])->group(function () {
 
 Route::middleware(['auth', 'user.status'])->group(function () {
     Route::get('/search/','SearchController@getSearch')->name('search');
+    Route::get('/showGroupReport/{year?}','ReportController@showGroupReport')->name('reportGroup');
+    Route::get('/showTeacherReport/{year?}','ReportController@showTeacherReport')->name('reportTeacher');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController');
     Route::resource('project','ProjectController');

@@ -47,14 +47,20 @@ class UserController extends Controller
 
         $user = new User();
 
+        $username = $request->get('username');
+
+        $usernameWithoutDash = str_replace('-', '', $username);
+
+        $password = substr($usernameWithoutDash, -6);
+
         $user->prefix_id = $request->get('prefix');
         $user->fname = $request->get('fname');
         $user->lname = $request->get('lname');
         $user->email = $request->get('email');
-        $user->username = $request->get('username');
+        $user->username = $username;
         $user->type = $request->get('type') ?? 0;
         $user->password = Hash::make(
-            $request->get('password')
+            $password
         );
 
         $message = '';
@@ -70,14 +76,46 @@ class UserController extends Controller
 
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'prefix' => ['required'],
-            'fname' => ['required', 'string', 'max:100'],
-            'lname' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-            'username' => ['required', 'string', 'min:6', 'max:100', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        $message = [
+            'fname.required' => 'กรุณาระบุชื่อจริง',
+            'lname.required' => 'กรุณาระบุนามสกุล',
+            'email.required' => 'กรุณาระบุ E-mail',
+            'email.email' => 'กรุณากรอก E-mail ให้ถูกต้อง',
+            'username.required' => 'กรุณาระบุ Username',
+            'username.min' => 'รหัสนักศึกษาต้องมีความยาว 11 ตัวอักษร',
+            'username.max' => 'รหัสนักศึกษาต้องมีความยาว 11 ตัวอักษร',
+        ];
+
+        if ($data['type'] == 0) {
+            return Validator::make($data, [
+                'prefix' => ['required'],
+                'fname' => ['required', 'string', 'max:100'],
+                'lname' => ['required', 'string', 'max:100'],
+                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+                'username' => [
+                    'required', 'string', 'min:11', 'max:11', 'unique:users',
+                    function ($attr, $value, $fail) {
+                        $splited = explode('-', $value);
+                        if (count($splited) != 2) {
+                            $fail('กรุณาระบุ Username ให้ถูกต้อง');
+                        }
+                        elseif (!ctype_digit($splited[0]) || !ctype_digit($splited[1])) {
+                            $fail('กรุณาระบุ Username ให้ถูกต้อง');
+                        }
+                    }
+                ],
+                //'password' => ['required', 'string', 'min:6', 'confirmed'],
+            ], $message);
+        } elseif ($data['type'] == 1) {
+            return Validator::make($data, [
+                'prefix' => ['required'],
+                'fname' => ['required', 'string', 'max:100'],
+                'lname' => ['required', 'string', 'max:100'],
+                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+                'username' => ['required', 'string', 'min:6', 'max:100', 'unique:users'],
+                //'password' => ['required', 'string', 'min:6', 'confirmed'],
+            ], $message);
+        }
     }
 
     /**

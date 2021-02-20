@@ -133,10 +133,10 @@
 
         <div class="teacher-joint-container">
             <div class="form-group row">
-                <label for="teacher-joint" class="col-md-4 col-form-label text-md-right">อาจารย์ที่ปรึกษาร่วม : </label>
+                <label for="teacher-joint" class="col-md-4 col-form-label text-md-right">ที่ปรึกษาร่วม : </label>
                 <div class="col-md-6">
                     <select name="teacher_joint[]" id="teacher_joint" class="selectpicker form-control"
-                        title="เลือกอาจารย์ที่ปรึกษาร่วม" data-selected-text-format="count > 3" data-live-search="true"
+                        title="เลือกที่ปรึกษาร่วม" data-selected-text-format="count > 3" data-live-search="true"
                         multiple>
                         @foreach ($teachers as $item)
                             <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }} {{ $item->lname }}</option>
@@ -186,7 +186,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">เพิ่มอาจารย์ที่ปรึกษาใหม่</h5>
+                <h5 class="modal-title" id="exampleModalLabel">เพิ่มที่ปรึกษาใหม่</h5>
                 <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

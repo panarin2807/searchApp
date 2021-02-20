@@ -6,7 +6,35 @@
                 <form method="get" action="{{ url('search') }}" class="container">
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label>หลักสูตร</label>
+                            <label>ค้นหาจาก</label>
+                            <select name="column[]"
+                                class="selectpicker form-control @error('column') is-invalid @enderror"
+                                title="เลือก Field ที่ต้องการค้นหา" data-selected-text-format="count > 3"
+                                data-live-search="true" multiple data-actions-box="true">
+                                @foreach ($fields as $key => $item)
+                                    <option value="{{ $key }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
+                            @error('column')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>Keyword</label>
+                            <input name="keyword" value="{{ old('keyword') }}" type="text"
+                                class="form-control @error('keyword') is-invalid @enderror" placeholder="คำค้นหา">
+                            @error('keyword')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>กลุ่ม</label>
                             <select name="group[]"
                                 class="selectpicker form-control @error('group') is-invalid @enderror"
                                 title="เลือกกลุ่ม" data-selected-text-format="count > 3" data-live-search="true"
@@ -51,34 +79,6 @@
                             <input id="endYear" name="end" value="{{ old('end') }}"
                                 class="form-control @error('end') is-invalid @enderror" />
                             @error('end')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <label>ค้นหาจาก</label>
-                            <select name="column[]"
-                                class="selectpicker form-control @error('column') is-invalid @enderror"
-                                title="เลือก Field ที่ต้องการค้นหา" data-selected-text-format="count > 3"
-                                data-live-search="true" multiple data-actions-box="true">
-                                @foreach ($fields as $key => $item)
-                                    <option value="{{ $key }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                            @error('column')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label>Keyword</label>
-                            <input name="keyword" value="{{ old('keyword') }}" type="text"
-                                class="form-control @error('keyword') is-invalid @enderror" placeholder="คำค้นหา">
-                            @error('keyword')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

@@ -19,6 +19,7 @@ class PrefixSeed extends Seeder
             'นาย',
             'นาง',
             'นางสาว',
+            'รต.ต',
         ];
 
         foreach ($prefixes as $value) {

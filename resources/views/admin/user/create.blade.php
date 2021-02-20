@@ -35,7 +35,7 @@
 
                         <div class="col-md-6">
                             <input id="fname" type="text" class="form-control @error('fname') is-invalid @enderror"
-                                name="fname" value="{{ old('fname') }}" required autofocus>
+                                name="fname" value="{{ old('fname') }}" autofocus>
 
                             @error('fname')
                                 <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@
 
                         <div class="col-md-6">
                             <input id="lname" type="text" class="form-control @error('lname') is-invalid @enderror"
-                                name="lname" value="{{ old('lname') }}" required autofocus>
+                                name="lname" value="{{ old('lname') }}" autofocus>
 
                             @error('lname')
                                 <span class="invalid-feedback" role="alert">
@@ -66,7 +66,7 @@
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email">
+                                name="email" value="{{ old('email') }}" autocomplete="email">
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
 
                         <div class="col-md-6">
                             <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
-                                name="username" value="{{ old('username') }}" required autofocus>
+                                name="username" value="{{ old('username') }}" autofocus>
 
                             @error('username')
                                 <span class="invalid-feedback" role="alert">
@@ -91,12 +91,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                         <div class="col-md-6">
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                class="form-control @error('password') is-invalid @enderror" name="password" 
                                 autocomplete="new-password">
 
                             @error('password')
@@ -113,9 +113,9 @@
 
                         <div class="col-md-6">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password">
+                                 autocomplete="new-password">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row">
                         <label for="user-type-select" class="col-md-4 col-form-label text-md-right">User Type</label>
@@ -147,3 +147,39 @@
     </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            // function setInputFilter(textbox, inputFilter) {
+            //     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(
+            //         function(event) {
+            //             textbox.addEventListener(event, function() {
+            //                 if (inputFilter(this.value)) {
+            //                     this.oldValue = this.value;
+            //                     this.oldSelectionStart = this.selectionStart;
+            //                     this.oldSelectionEnd = this.selectionEnd;
+            //                 } else if (this.hasOwnProperty("oldValue")) {
+            //                     this.value = this.oldValue;
+            //                     this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            //                 } else {
+            //                     this.value = "";
+            //                 }
+            //             });
+            //         });
+            // }
+
+            // setInputFilter(document.getElementById("username"), function(value) {
+            //     return /^\d*$/.test(value);
+            // });
+
+            // var input = document.getElementById('username');
+            // input.addEventListener('input',function(){
+            //     if(input.value.length === 9){
+            //         input.value += '-';
+            //     }
+            // });
+        });
+
+    </script>
+@endpush

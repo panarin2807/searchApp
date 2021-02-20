@@ -50,14 +50,33 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $message = [
+            'fname.required' => 'กรุณาระบุชื่อจริง',
+            'lname.required' => 'กรุณาระบุนามสกุล',
+            'email.required' => 'กรุณาระบุ E-mail',
+            'email.email' => 'กรุณากรอก E-mail ให้ถูกต้อง',
+            'username.required' => 'กรุณาระบุ Username',
+        ];
+
         return Validator::make($data, [
             'prefix' => ['required'],
             'fname' => ['required', 'string', 'max:100'],
             'lname' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-            'username' => ['required', 'string', 'min:6', 'max:100', 'unique:users'],
+            'username' => [
+                'required', 'string', 'min:10', 'max:10', 'unique:users',
+                function ($attr, $value, $fail) {
+                    $splited = explode('-', $value);
+                    if (count($splited) != 2) {
+                        $fail('กรุณาระบุ Username ให้ถูกต้อง');
+                    }
+                    if ($value == '1234567890') {
+                        $fail('Username ไม่ถูกต้อง');
+                    }
+                }
+            ],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-        ]);
+        ], $message);
     }
 
     /**

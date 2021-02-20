@@ -23,13 +23,6 @@ class ProjectSeed extends Seeder
             'advisor_joint' => 'นายอนุชิต คังดงเค็ง, นางสาวธัญจิรา ยางเดี่ยว',
             'group_id' => 4,
             'curricula_id' => 2,
-            // 'file_front' => 'file/1/2021/02/front.pdf',
-            // 'file_back' => 'file/1/2021/02/back.pdf',
-            // 'file_ch1' => 'file/1/2021/02/ch_1.pdf',
-            // 'file_ch2' => 'file/1/2021/02/ch_2.pdf',
-            // 'file_ch3' => 'file/1/2021/02/ch_3.pdf',
-            // 'file_ch4' => 'file/1/2021/02/ch_4.pdf',
-            // 'file_ch5' => 'file/1/2021/02/ch_5.pdf',
         ]);
     }
 }
