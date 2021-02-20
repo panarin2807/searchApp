@@ -12,7 +12,9 @@ class ReportController extends Controller
     //
     public function showGroupReport($year = '')
     {
-        if ($year = '') $year = date('Y');
+        if ($year == '') $year = date('Y');
+
+        //var_dump($year);
 
         $groups = DB::table('groups')
             ->select('groups.name as name', DB::raw('count(projects.id) as total'))
@@ -36,7 +38,7 @@ class ReportController extends Controller
 
     public function showTeacherReport($year = '')
     {
-        if ($year = '') $year = date('Y');
+        if ($year == '') $year = date('Y');
 
         $groups = DB::table('users')
             ->select(DB::raw('CONCAT(users.fname," ", users.lname) AS name'), DB::raw('count(project_relas.id) as total'))

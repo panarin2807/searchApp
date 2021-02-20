@@ -9,7 +9,8 @@
 @endsection
 
 @section('content')
-    <Form method="POST" id="form-id" action="{{ route('project.store') }}" enctype="multipart/form-data">
+    <Form method="POST" id="form-id" onsubmit="return validateFile()" action="{{ route('project.store') }}"
+        enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row">
@@ -96,7 +97,8 @@
                         class="selectpicker form-control @error('student') is-invalid @enderror" title="เลือกนักศึกษา"
                         data-selected-text-format="count > 3" data-live-search="true" multiple>
                         @foreach ($students as $item)
-                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }} {{ $item->lname }}</option>
+                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
+                                {{ $item->lname }}</option>
                         @endforeach
                     </select>
                     @error('student')
@@ -117,7 +119,8 @@
                         title="เลือกอาจารย์ที่ปรึกษาหลัก" data-selected-text-format="count > 3" data-live-search="true"
                         multiple>
                         @foreach ($teachers as $item)
-                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }} {{ $item->lname }}</option>
+                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
+                                {{ $item->lname }}</option>
                         @endforeach
                     </select>
                     @error('teacher')
@@ -136,10 +139,10 @@
                 <label for="teacher-joint" class="col-md-4 col-form-label text-md-right">ที่ปรึกษาร่วม : </label>
                 <div class="col-md-6">
                     <select name="teacher_joint[]" id="teacher_joint" class="selectpicker form-control"
-                        title="เลือกที่ปรึกษาร่วม" data-selected-text-format="count > 3" data-live-search="true"
-                        multiple>
+                        title="เลือกที่ปรึกษาร่วม" data-selected-text-format="count > 3" data-live-search="true" multiple>
                         @foreach ($teachers as $item)
-                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }} {{ $item->lname }}</option>
+                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
+                                {{ $item->lname }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -166,14 +169,21 @@
             <div class="form-group row">
                 <label class="col-md-2 col-form-label text-md-right">ส่วนที่ {{ $key + 1 }} : </label>
                 <label class="col-md-2 col-form-label text-md-left">{{ $item->description }}</label>
-                <input type="file" accept="application/pdf" name="file_{{ $item->id }}" required
-                    class="form-control-file col-md-6">
+                <div class="col-md-6">
+                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}"
+                        class="form-control-file" required>
+                    @error('file_{{ $item->id }}')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
         @endforeach
 
         <div class="container">
             <div class="col-md-12 text-center">
-                <button type="button" onclick="return submitForm(this.form);" class="btn btn-success">บันทึก</button>
+                <button type="submit" class="btn btn-success">บันทึก</button>
                 <a href="{{ route('home') }}" class="btn btn-ligth">ยกเลิก</a>
             </div>
         </div>
@@ -204,6 +214,20 @@
 
 @push('scripts')
     <script>
+        function validateFile() {
+            $(document).ready(function() {
+                var selected = [];
+                var input = $('#teacher_joint').find("option:selected");
+                for (let index = 0; index < input.length; index++) {
+                    const element = input[index];
+                    selected.push(element.text);
+                }
+                console.log(selected);
+                $('#select_teacher_joint').val(selected);
+            })
+            return true;
+        }
+
         function submitForm(frm) {
             $(document).ready(function() {
                 var selected = [];

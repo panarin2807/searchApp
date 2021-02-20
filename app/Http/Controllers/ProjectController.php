@@ -57,7 +57,7 @@ class ProjectController extends Controller
             'year' => 'required|string|min:4|max:4',
             'abstract' => 'required|string',
             'group' => 'required',
-            'curr' => 'required'
+            'curr' => 'required',
         ];
 
         $message = [
@@ -71,13 +71,22 @@ class ProjectController extends Controller
             'curr.required' => 'กรุณาเลือกหลักสูตร',
         ];
 
+        $configs = Config::where('status', 1)->get();
+
+        // foreach($configs as $item){
+        //     $rules['file_'.$item->id] = 'required|image';
+        //     $message['file_'.$item->id.'.*'] = 'กรุณาแนบไฟล์';
+        // }
+
+        //return back()->with('status','test : '.json_encode($rules));
+
+        //var_dump($rules);
+
         $request->validate($rules, $message);
 
         $students = $request->get('student');
 
         $teachers = $request->get('teacher');
-
-        $configs = Config::where('status', 1)->get();
 
         $projectId = DB::table('projects')->insertGetId([
             'name_th' => $request->get('name_th'),
@@ -103,6 +112,7 @@ class ProjectController extends Controller
                     'value' => $path,
                 ]);
             } else {
+                DB::table('projects')->where('id',$projectId)->delete();
                 return back()->with(['error' => 'เพิ่มโครงงานไม่สำเร็จ']);
             }
         }
