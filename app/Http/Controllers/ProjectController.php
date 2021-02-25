@@ -82,6 +82,12 @@ class ProjectController extends Controller
 
         //var_dump($rules);
 
+        //$test = $request->input('select_teacher_joint');
+
+        //dd($test);
+
+        //return back()->with('status', 'test');
+
         $request->validate($rules, $message);
 
         $students = $request->get('student');
@@ -92,7 +98,7 @@ class ProjectController extends Controller
             'name_th' => $request->get('name_th'),
             'name_en' => $request->get('name_en'),
             'year' => $request->get('year'),
-            'advisor_joint' => $request->get('select_teacher_joint'),
+            'advisor_joint' => $request->input('select_teacher_joint'),
             'abstract' => $request->get('abstract'),
             'group_id' => $request->get('group'),
             'curricula_id' => $request->get('curr'),
@@ -112,7 +118,7 @@ class ProjectController extends Controller
                     'value' => $path,
                 ]);
             } else {
-                DB::table('projects')->where('id',$projectId)->delete();
+                DB::table('projects')->where('id', $projectId)->delete();
                 return back()->with(['error' => 'เพิ่มโครงงานไม่สำเร็จ']);
             }
         }

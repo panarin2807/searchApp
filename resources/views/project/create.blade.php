@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <Form method="POST" id="form-id" onsubmit="return validateFile()" action="{{ route('project.store') }}"
+    <Form method="POST" id="form-id"  action="{{ route('project.store') }}"
         enctype="multipart/form-data">
         @csrf
 
@@ -170,8 +170,7 @@
                 <label class="col-md-2 col-form-label text-md-right">ส่วนที่ {{ $key + 1 }} : </label>
                 <label class="col-md-2 col-form-label text-md-left">{{ $item->description }}</label>
                 <div class="col-md-6">
-                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}"
-                        class="form-control-file" required>
+                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}" required class="form-control-file">
                     @error('file_{{ $item->id }}')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -214,35 +213,42 @@
 
 @push('scripts')
     <script>
-        function validateFile() {
-            $(document).ready(function() {
-                var selected = [];
-                var input = $('#teacher_joint').find("option:selected");
-                for (let index = 0; index < input.length; index++) {
-                    const element = input[index];
-                    selected.push(element.text);
-                }
-                console.log(selected);
-                $('#select_teacher_joint').val(selected);
-            })
-            return true;
-        }
+        // function validateFile() {
+        //     $(document).ready(function() {
+        //         var selected = '';
+        //         var input = $('#teacher_joint').find("option:selected");
+        //         for (let index = 0; index < input.length; index++) {
+        //             const element = input[index];
+        //             if (index == input.length - 1) {
+        //                 selected += element.text;
+        //             } else {
+        //                 selected += element.text + ', ';
+        //             }
+        //         }
+        //         //console.log(selected);
+        //         //console.log(selected);
+        //         $('#select_teacher_joint').val(selected);
+        //         return true;
+        //         //console.log($('#select_teacher_join').val());
+        //     })
+        // }
 
-        function submitForm(frm) {
-            $(document).ready(function() {
-                var selected = [];
-                var input = $('#teacher_joint').find("option:selected");
-                for (let index = 0; index < input.length; index++) {
-                    const element = input[index];
-                    selected.push(element.text);
-                }
-                console.log(selected);
-                $('#select_teacher_joint').val(selected);
-                frm.submit();
-            })
-        }
 
         $(document).ready(function() {
+
+            $('#form-id').submit(function(event) {
+                var selected = '';
+                var input = $('#teacher_joint').find("option:selected");
+                for (let index = 0; index < input.length; index++) {
+                    const element = input[index];
+                    if (index == input.length - 1) {
+                        selected += element.text;
+                    } else {
+                        selected += element.text + ', ';
+                    }
+                }
+                $('input[name=select_teacher_joint]').val(selected);
+            });
 
             $('#exampleModal').on('hidden.bs.modal', function() {
                 $('#new_teacher').val("");
@@ -255,15 +261,6 @@
                 $("#teacher_joint").selectpicker("refresh");
             });
 
-            // $('#teacher_joint').change(function() {
-            //     var selected = [];
-            //     var input = $(this).find("option:selected");
-            //     for (let index = 0; index < input.length; index++) {
-            //         const element = input[index];
-            //         selected.push(element.text);
-            //     }
-            //     $('#select_teacher_joint').val(selected);
-            // });
 
             $('#datepicker').datepicker({
                 format: 'yyyy',
