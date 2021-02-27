@@ -1,7 +1,33 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 // Variables
-@import 'variables';
+@import "variables";
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+.card-header {
+    color: aliceblue;
+    background-color: rgb(209, 94, 17);
+    text-align: center;
+}
+
+.bg-dark {
+    background-color: rgb(51, 42, 36) !important;
+}
+
+th {
+    background-color: rgb(209, 94, 17);
+    color: white;
+}
+
+a {
+    color: brown;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: rgb(116, 30, 30);
+    text-decoration: none;
+}

@@ -11,6 +11,12 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-2">
+                <label>ปีการศึกษา</label>
+                <input type="text" id="date" class="form-control" value="{{ $year ?? date('Y') }}" autocomplete="off">
+            </div>
+        </div>
+        <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading my-2">รายงานจำนวนเล่มโครงงานในแต่ละหมวดหมู่</div>
@@ -20,11 +26,32 @@
                 </div>
             </div>
         </div>
+        <hr>
+        @foreach ($chart->labels as $key => $item)
+            <div class="row justify-content-center">
+                <div class="col-md-1 text-right">
+                    <span class="dot" style="background-color: {{$chart->colours[$key]}}"></span>
+                </div>
+                <div class="col-md-1 text-left">{{ $item }}</div>
+                <div class="col-md-8 text-left">{{ $chart->name[$key] }}</div>
+            </div>
+        @endforeach
     </div>
+    <form action="#" id="form-search" method="get"></form>
 @endsection
 
 
 @push('scripts')
+    <style>
+        .dot {
+            height: 15px;
+            width: 15px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+    </style>
     <script>
         var config = JSON.parse('<?php echo $chart; ?>');
         var barChartData = {
@@ -37,7 +64,20 @@
         };
 
         $(document).ready(function() {
-            console.log(config.dataset);
+
+            $('#date').datepicker({
+                autoclose: true,
+                format: 'yyyy',
+                startView: 'years',
+                minViewMode: 'years'
+            })
+
+            $('#date').change(function() {
+                var year = $(this).val()
+                $('#form-search').attr('action', '/showGroupReport/' + year)
+                $('#form-search').submit()
+            })
+
             var ctx = document.getElementById('report').getContext('2d');
             var chart = new Chart(ctx, {
                 // The type of chart we want to create

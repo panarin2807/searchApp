@@ -14619,3 +14619,28 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.card-header {
+  color: aliceblue;
+  background-color: #d15e11;
+  text-align: center;
+}
+
+.bg-dark {
+  background-color: #332a24 !important;
+}
+
+th {
+  background-color: #d15e11;
+  color: white;
+}
+
+a {
+  color: brown;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #741e1e;
+  text-decoration: none;
+}

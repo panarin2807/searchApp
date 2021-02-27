@@ -46,7 +46,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function prefix(){
+    public function prefix()
+    {
         return $this->belongsTo(Prefix::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_relas');
     }
 }

@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }}">
-            {{ config('app.name', 'Laravel') }}
+            <img src="{{ asset('image/nav_logo.png') }}" height="auto" width="100%" style="max-width: 280px"/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -19,8 +19,8 @@
                     @endif
                     @if (Auth::guard('web')->user()->type == 1)
                         <li class="nav-item dropdown">
-                            <a href="#" id="reportDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" v-pre>รายงาน</a>
+                            <a href="#" id="reportDropdown" class="nav-link dropdown-toggle" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>รายงาน</a>
 
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportDropdown">

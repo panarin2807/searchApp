@@ -21,18 +21,21 @@ Route::get('/', function () {
 Route::middleware(['auth', 'Admin'])->group(function () {
     Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
-        Route::get('/setting','SettingAppController@index')->name('setting');
+        Route::get('/setting', 'SettingAppController@index')->name('setting');
         Route::resource('user', 'UserController');
     });
 });
 
+Route::get('importExportView', 'Admin\ImportController@importExportView')->name('importExportView');
+Route::post('import', 'Admin\ImportController@import')->name('import');
+
 Route::middleware(['auth', 'user.status'])->group(function () {
-    Route::get('/search/','SearchController@getSearch')->name('search');
-    Route::get('/showGroupReport/{year?}','ReportController@showGroupReport')->name('reportGroup');
-    Route::get('/showTeacherReport/{year?}','ReportController@showTeacherReport')->name('reportTeacher');
+    Route::get('/search/', 'SearchController@getSearch')->name('search');
+    Route::get('/showGroupReport/{year?}', 'ReportController@showGroupReport')->name('reportGroup');
+    Route::get('/showTeacherReport/{year?}', 'ReportController@showTeacherReport')->name('reportTeacher');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController');
-    Route::resource('project','ProjectController');
+    Route::resource('project', 'ProjectController');
 });
 
 Auth::routes();

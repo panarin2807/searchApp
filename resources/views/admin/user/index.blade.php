@@ -9,11 +9,14 @@
 
     <div class="row justify-content-between mx-auto my-2">
         <label for="student_table">ข้อมูลนักศึกษา</label>
-        <a href="{{ URL::to('admin/user/create') }}" class="btn btn-warning">เพิ่ม</a>
+        <span>
+            <a href="{{ route('importExportView') }}" class="btn btn-warning">นำเข้า</a>
+            <a href="{{ URL::to('admin/user/create') }}" class="btn btn-warning">เพิ่ม</a>
+        </span>
     </div>
     <div class="table-responsive">
         <table class="table table-hover table-striped table-sm">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>คำนำหน้า</th>
@@ -61,7 +64,7 @@
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>คำนำหน้า</th>

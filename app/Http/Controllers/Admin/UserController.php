@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -23,6 +25,19 @@ class UserController extends Controller
         $teacher = User::where('type', 1)->get();
         return view('admin.user.index', ['students' => $students, 'teachers' => $teacher]);
     }
+
+    public function showImport()
+    {
+        //return back()->with('status','wowza');
+        return view('admin.user.import');
+    }
+
+    // public function import()
+    // {
+    //     Excel::import(new UsersImport, request()->file('file'));
+
+    //     return back()->with('status', 'บันทึกข้อมูลสำเร็จ');
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -98,8 +113,7 @@ class UserController extends Controller
                         $splited = explode('-', $value);
                         if (count($splited) != 2) {
                             $fail('กรุณาระบุ Username ให้ถูกต้อง');
-                        }
-                        elseif (!ctype_digit($splited[0]) || !ctype_digit($splited[1])) {
+                        } elseif (!ctype_digit($splited[0]) || !ctype_digit($splited[1])) {
                             $fail('กรุณาระบุ Username ให้ถูกต้อง');
                         }
                     }
