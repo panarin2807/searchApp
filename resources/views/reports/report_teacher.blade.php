@@ -10,11 +10,9 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <label>ปีการศึกษา</label>
-                <input type="text" id="date" class="form-control" value="{{ $year ?? date('Y') }}" autocomplete="off">
-            </div>
+        <div class="row justify-content-center form-inline">
+            <label>ปีการศึกษา</label>
+            <input type="text" id="date" class="form-control ml-2" value="{{ $year ?? date('Y') }}" autocomplete="off">
         </div>
         <div class="row justify-content-center">
             <div class="col-md-8">

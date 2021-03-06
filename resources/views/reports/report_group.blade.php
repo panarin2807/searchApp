@@ -10,11 +10,9 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <label>ปีการศึกษา</label>
-                <input type="text" id="date" class="form-control" value="{{ $year ?? date('Y') }}" autocomplete="off">
-            </div>
+        <div class="row justify-content-center form-inline">
+            <label>ปีการศึกษา</label>
+            <input type="text" id="date" class="form-control ml-2" value="{{ $year ?? date('Y') }}" autocomplete="off">
         </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -30,7 +28,7 @@
         @foreach ($chart->labels as $key => $item)
             <div class="row justify-content-center">
                 <div class="col-md-1 text-right">
-                    <span class="dot" style="background-color: {{$chart->colours[$key]}}"></span>
+                    <span class="dot" style="background-color: {{ $chart->colours[$key] }}"></span>
                 </div>
                 <div class="col-md-1 text-left">{{ $item }}</div>
                 <div class="col-md-8 text-left">{{ $chart->name[$key] }}</div>

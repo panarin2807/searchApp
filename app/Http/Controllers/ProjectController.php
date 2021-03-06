@@ -9,6 +9,8 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Project as ReflectionProject;
 
 class ProjectController extends Controller
 {
@@ -20,9 +22,9 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $projects = Project::where('status', 1)->get();
+        $projects = Project::where('status', 1)->simplePaginate(5);
         //$groups = Group::findOrFail(4));
-        return view('project.index', ['projects' => $projects]);
+        return view('admin.project.index', compact('projects'));
     }
 
     /**
@@ -72,21 +74,6 @@ class ProjectController extends Controller
         ];
 
         $configs = Config::where('status', 1)->get();
-
-        // foreach($configs as $item){
-        //     $rules['file_'.$item->id] = 'required|image';
-        //     $message['file_'.$item->id.'.*'] = 'กรุณาแนบไฟล์';
-        // }
-
-        //return back()->with('status','test : '.json_encode($rules));
-
-        //var_dump($rules);
-
-        //$test = $request->input('select_teacher_joint');
-
-        //dd($test);
-
-        //return back()->with('status', 'test');
 
         $request->validate($rules, $message);
 
@@ -163,6 +150,13 @@ class ProjectController extends Controller
     public function edit($id)
     {
         //
+        $project = Project::findOrFail($id);
+        $students = User::where('type', 0)->get();
+        $teachers = User::where('type', 1)->get();
+        $configs = Config::where('status', 1)->get();
+        $curr = Curriculum::where('status', 1)->get();
+        $groups = Group::where('status', 1)->get();
+        return view('admin.project.edit', compact('project', 'students', 'teachers', 'configs', 'curr', 'groups'));
     }
 
     /**
@@ -175,6 +169,87 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $rules = [
+            'name_th' => 'required|string',
+            'name_en' => 'required|string',
+            'student' => 'required',
+            'teacher' => 'required',
+            'year' => 'required|string|min:4|max:4',
+            'abstract' => 'required|string',
+            'group' => 'required',
+            'curr' => 'required',
+        ];
+
+        $message = [
+            'name_th.required' => 'กรุณาระบุชื่อภาษาไทย',
+            'name_en.required' => 'กรุณาระบุชื่อภาษาอังกฤษ',
+            'student.required' => 'กรุณาเลือกนักศึกษา',
+            'teacher.required' => 'กรุณาเลือกอาจารย์',
+            'year.*' => 'กรุณาเลือกปีการศึกษา',
+            'abstract.required' => 'กรุณาเพิ่มบทคัดย่อ',
+            'group.required' => 'กรุณาเลือกกลุ่ม',
+            'curr.required' => 'กรุณาเลือกหลักสูตร',
+        ];
+
+        $request->validate($rules, $message);
+
+        $configs = Config::where('status', 1)->get();
+
+        $files = DB::table('project_files')->where('project_id', $id)->get();
+
+        $year = explode('/', $files[0]->value)[1];
+
+        foreach ($configs as $value) {
+            if ($request->hasFile('file_' . $value->id)) {
+                $file = $request->file('file_' . $value->id);
+                $path = $file->storeAs('file/' . $year . '/' . $id, $value->description . '.pdf');
+                DB::table('project_files')->where([
+                    ['project_id', $id],
+                    ['config_id', $value->id]
+                ])->update([
+                    'value' => $path,
+                ]);
+            }
+        }
+
+        $data = array(
+            'name_th' => $request->get('name_th'),
+            'name_en' => $request->get('name_en'),
+            'year' => $request->get('year'),
+            'abstract' => $request->get('abstract'),
+            'group_id' => $request->get('group'),
+            'curricula_id' => $request->get('curr'),
+        );
+
+        if ($request->get('teacher_joint') != null) {
+            $data['advisor_joint'] = $request->input('select_teacher_joint');
+        }
+
+        DB::table('projects')->where('id', $id)->update($data);
+
+        $students = $request->get('student');
+
+        $teachers = $request->get('teacher');
+
+        $users = array_merge($students,$teachers);
+
+        DB::table('project_relas')->where('project_id', $id)->whereNotIn('user_id', $users)->delete();
+
+        foreach ($students as $key => $value) {
+            DB::table('project_relas')->upsert([
+                'user_id' => $value,
+                'project_id' => $id
+            ], 'project_relas_user_id_project_id_unique');
+        }
+
+        foreach ($teachers as $key => $value) {
+            DB::table('project_relas')->upsert([
+                'user_id' => $value,
+                'project_id' => $id
+            ], 'project_relas_user_id_project_id_unique');
+        }
+
+        return redirect()->action([ProjectController::class, 'index'])->with('status', 'แก้ไขโครงงานสำเร็จ');
     }
 
     /**
@@ -186,5 +261,13 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         //
+        $project = Project::findOrFail($id);
+        $files = DB::table('project_files')->where('project_id', $project->id)->get();
+        $path = explode('/', $files[0]->value);
+        Storage::deleteDirectory($path[0] . '/' . $path[1] . '/' . $path[2]);
+        DB::table('project_files')->where('project_id', $project->id)->delete();
+        DB::table('project_relas')->where('project_id', $project->id)->delete();
+        $project->delete();
+        return back()->with('status', 'ลบโครงงานสำเร็จ');
     }
 }

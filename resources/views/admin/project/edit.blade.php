@@ -1,17 +1,10 @@
-@extends('layouts.admin.app')
-
-@section('title')
-    CREATE PROJECT
-@endsection
-
-@section('header')
-    CREATE PROJECT
-@endsection
+@extends('layouts.app')
 
 @section('content')
-    <Form method="POST" id="form-id"  action="{{ route('project.store') }}"
-        enctype="multipart/form-data">
+    <Form method="POST" id="form-id" action="{{ route('project.update', $project) }}" enctype="multipart/form-data">
         @csrf
+
+        @method('PUT')
 
         <div class="form-group row">
             <label for="curr" class="col-md-4 col-form-label text-md-right">หลักสูตร : </label>
@@ -19,7 +12,7 @@
                 <select name="curr" class="selectpicker form-control @error('curr') is-invalid @enderror"
                     title="เลือกหลักสูตร" data-live-search="true">
                     @foreach ($curr as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        <option value="{{ $item->id }}" @if ($project->curricula_id == $item->id) selected @endif>{{ $item->name }}</option>
                     @endforeach
                 </select>
                 @error('curr')
@@ -36,7 +29,7 @@
                 <select name="group" class="selectpicker form-control @error('group') is-invalid @enderror"
                     title="เลือกกลุ่ม" data-live-search="true">
                     @foreach ($groups as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        <option value="{{ $item->id }}" @if ($project->group_id == $item->id) selected @endif>{{ $item->name }}</option>
                     @endforeach
                 </select>
                 @error('group')
@@ -52,7 +45,7 @@
 
             <div class="col-md-6">
                 <input id="name_th" type="text" class="form-control @error('name_th') is-invalid @enderror" name="name_th"
-                    value="{{ old('name_th') }}" autofocus>
+                    value="{{ $project->name_th ?? old('name_th') }}" autofocus>
 
                 @error('name_th')
                     <span class="invalid-feedback" role="alert">
@@ -67,7 +60,7 @@
 
             <div class="col-md-6">
                 <input id="name_en" type="text" class="form-control @error('name_en') is-invalid @enderror" name="name_en"
-                    value="{{ old('name_en') }}" autofocus>
+                    value="{{ $project->name_en ?? old('name_en') }}" autofocus>
 
                 @error('name_en')
                     <span class="invalid-feedback" role="alert">
@@ -80,7 +73,8 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">ปีการศึกษา : </label>
             <div class="col-md-6">
-                <input id="datepicker" name="year" class="form-control @error('year') is-invalid @enderror" />
+                <input id="datepicker" name="year" value="{{ $project->year }}"
+                    class="form-control @error('year') is-invalid @enderror" />
                 @error('year')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -97,8 +91,11 @@
                         class="selectpicker form-control @error('student') is-invalid @enderror" title="เลือกนักศึกษา"
                         data-selected-text-format="count > 3" data-live-search="true" multiple>
                         @foreach ($students as $item)
-                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
-                                {{ $item->lname }}</option>
+                            <option value="{{ $item->id }}" @foreach ($project->relas as $rela)  @if ($rela->user->id==$item->id)
+                                selected @endif
+                        @endforeach
+                        >{{ $item->prefix->name }}{{ $item->fname }}
+                        {{ $item->lname }}</option>
                         @endforeach
                     </select>
                     @error('student')
@@ -119,8 +116,10 @@
                         title="เลือกอาจารย์ที่ปรึกษาหลัก" data-selected-text-format="count > 3" data-live-search="true"
                         multiple>
                         @foreach ($teachers as $item)
-                            <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
-                                {{ $item->lname }}</option>
+                            <option value="{{ $item->id }}" @foreach ($project->relas as $rela)  @if ($rela->user->id==$item->id)
+                                selected @endif
+                        @endforeach>{{ $item->prefix->name }}{{ $item->fname }}
+                        {{ $item->lname }}</option>
                         @endforeach
                     </select>
                     @error('teacher')
@@ -156,7 +155,7 @@
             <label for="" class="col-md-4 col-form-label text-md-right">บทคัดย่อ : </label>
             <div class="col-md-6">
                 <textarea name="abstract" style="resize:none;" rows="5"
-                    class="form-control @error('abstract') is-invalid @enderror"></textarea>
+                    class="form-control @error('abstract') is-invalid @enderror">{{ $project->abstract }}</textarea>
                 @error('abstract')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -170,7 +169,7 @@
                 <label class="col-md-4 col-form-label text-md-right">ส่วนที่ {{ $key + 1 }} : </label>
                 <label class="col-md-2 col-form-label text-md-left">{{ $item->description }}</label>
                 <div class="col-md-6">
-                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}" required class="form-control-file">
+                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}" class="form-control-file">
                     @error('file_{{ $item->id }}')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -183,7 +182,7 @@
         <div class="container">
             <div class="col-md-12 text-center">
                 <button type="submit" class="btn btn-success">บันทึก</button>
-                <a onclick="goBack()" class="btn btn-ligth">ยกเลิก</a>
+                <a onclick="goBack()" class="btn btn-light">ยกเลิก</a>
             </div>
         </div>
     </Form>
@@ -211,34 +210,14 @@
     </div>
 </div>
 
+{{ $project->advisor_joint }}
+
 @push('scripts')
     <script>
-        // function validateFile() {
-        //     $(document).ready(function() {
-        //         var selected = '';
-        //         var input = $('#teacher_joint').find("option:selected");
-        //         for (let index = 0; index < input.length; index++) {
-        //             const element = input[index];
-        //             if (index == input.length - 1) {
-        //                 selected += element.text;
-        //             } else {
-        //                 selected += element.text + ', ';
-        //             }
-        //         }
-        //         //console.log(selected);
-        //         //console.log(selected);
-        //         $('#select_teacher_joint').val(selected);
-        //         return true;
-        //         //console.log($('#select_teacher_join').val());
-        //     })
-        // }
         function goBack() {
             window.history.back();
         }
-
-
         $(document).ready(function() {
-
             $('#form-id').submit(function(event) {
                 var selected = '';
                 var input = $('#teacher_joint').find("option:selected");
@@ -270,145 +249,7 @@
                 startView: "years",
                 minViewMode: "years"
             });
-
-            // var wrapperStudent = $('.student-container')
-            // var addStudentButton = $('#add-student')
-            // var limitStudent = Number('<?php echo count($students); ?>');
-            // var countStudent = 1;
-            // var students = JSON.parse('<?php echo json_encode($students); ?>');
-            // var studentOption = '';
-
-            // var wrapperTeacher = $('.teacher-container')
-            // var addTeacherButton = $('#add-teacher')
-            // var limitTeacher = Number('<?php echo count($teachers); ?>');
-            // var countTeacher = 1;
-            // var teachers = JSON.parse('<?php echo json_encode($teachers); ?>');
-            // var teacherOption = '';
-
-            // var wrapperTeacherJoint = $('.teacher-joint-container');
-            // var addTeacherJointButton = $('#add-teacher-joint');
-
-            // students.forEach(element => {
-            //     studentOption += '<option value="' + element.id + '">' + element.fname + ' ' + element
-            //         .lname + '</option>';
-            // });
-
-            // teachers.forEach(element => {
-            //     teacherOption += '<option value="' + element.id + '">' + element.fname + ' ' + element
-            //         .lname + '</option>';
-            // });
-
-            // $(addTeacherJointButton).click(function(e) {
-            //     e.preventDefault();
-            //     $(wrapperTeacherJoint).append(
-            //         '<div class="form-group row">' +
-            //         '<div class="col-md-4"></div>' +
-            //         '<div class="col-md-6">' +
-            //         '<select name="teacher_joint[]" required class="form-control ">' +
-            //         '<option value="">เลือกอาจารย์ที่ปรึกษาร่วม</option>' +
-            //         teacherOption +
-            //         '</select>' +
-            //         '</div>' +
-            //         '<div class="col-md-1">' +
-            //         '<a href="#" class="btn btn-danger mr-2 delete-teacher-joint">ลบ</a>' +
-            //         '</div>' +
-            //         '</div>')
-            // });
-
-            // $(wrapperTeacherJoint).on("click", ".delete-teacher-joint", function(e) {
-            //     e.preventDefault();
-            //     var div = $(this).parent('div');
-            //     div.parent('div').remove();
-            // })
-
-            // $(addTeacherButton).click(function(e) {
-            //     e.preventDefault();
-            //     if (countTeacher < limitTeacher) {
-            //         countTeacher++
-            //         $(wrapperTeacher).append(
-            //             '<div class="form-group row">' +
-            //             '<div class="col-md-4"></div>' +
-            //             '<div class="col-md-6">' +
-            //             '<select name="users[]" required class="form-control ">' +
-            //             '<option value="">เลือกอาจารย์</option>' +
-            //             teacherOption +
-            //             '</select>' +
-            //             '</div>' +
-            //             '<div class="col-md-1">' +
-            //             '<a href="#" class="btn btn-danger mr-2 delete-teacher">ลบ</a>' +
-            //             '</div>' +
-            //             '</div>')
-            //     } else {
-            //         alert('ไม่สามารถเพิ่มอาจารย์ได้')
-            //     }
-
-            // });
-
-            // $(wrapperTeacher).on("click", ".delete-teacher", function(e) {
-            //     e.preventDefault();
-            //     var div = $(this).parent('div');
-            //     div.parent('div').remove();
-            //     countTeacher--
-            // })
-
-            // $(addStudentButton).click(function(e) {
-            //     e.preventDefault();
-            //     if (countStudent < limitStudent) {
-            //         countStudent++
-            //         $(wrapperStudent).append(
-            //             '<div class="form-group row">' +
-            //             '<div class="col-md-4"></div>' +
-            //             '<div class="col-md-6">' +
-            //             '<select name="users[]" required class="form-control ">' +
-            //             '<option value="">เลือกนักศึกษา</option>' +
-            //             studentOption +
-            //             '</select>' +
-            //             '</div>' +
-            //             '<div class="col-md-1">' +
-            //             '<a href="#" class="btn btn-danger mr-2 delete-student">ลบ</a>' +
-            //             '</div>' +
-            //             '</div>')
-            //     } else {
-            //         alert('ไม่สามารถเพิ่มนักศึกษาได้')
-            //     }
-
-            // });
-
-            // $(wrapperStudent).on("click", ".delete-student", function(e) {
-            //     e.preventDefault();
-            //     var div = $(this).parent('div');
-            //     div.parent('div').remove();
-            //     countStudent--
-            // })
-
-            // $('#submit').click(function(e) {
-            //     e.preventDefault();
-            //     //alert('submit')
-            //     // var k = "The respective values are :";
-            //     // var input = document.getElementsByName('users[]');
-            //     // var selected = [];
-            //     // for (var i = 0; i < input.length; i++) {
-            //     //     selected.push(input[i].value);
-            //     // }
-            //     // selected = selected.filter(function(item, pos) {
-            //     //     return selected.indexOf(item) == pos && item != "";
-            //     // })
-            //     // if (selected.length > 0) {
-            //     //     var xhr = new XMLHttpRequest();
-            //     //     xhr.open("POST", '<?php echo url('project/store'); ?>', true);
-            //     //     xhr.setRequestHeader('Content-Type', 'application/json');
-            //     //     xhr.send(JSON.stringify({
-            //     //         name_th : "",
-            //     //         name_en : "",
-            //     //         users : selected
-            //     //     }));
-            //     // }else{
-            //     //     alert('กรุณาเลือกนักศึกษา / อาจารย์ที่ปรึกษา')
-            //     // }
-            //     //$('form').submit()
-            //     //document.getElementById("form-id").submit()
-            // })
-        });
+        })
 
     </script>
 @endpush

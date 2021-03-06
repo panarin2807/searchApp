@@ -15,6 +15,7 @@
                 @if (Auth::guard('web')->check())
                     @if (Auth::guard('web')->user()->type == 2)
                         <a href="{{ URL::to('admin/user') }}" class="nav-link">จัดการผู้ใช้</a>
+                        <a href="{{ route('project.index') }}" class="nav-link">จัดการโครงงาน</a>
                         {{-- <a href="{{ route('admin.setting') }}" class="nav-link">ตั้งค่า Config</a> --}}
                     @endif
                     @if (Auth::guard('web')->user()->type == 1)
