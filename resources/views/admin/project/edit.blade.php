@@ -210,8 +210,6 @@
     </div>
 </div>
 
-{{ $project->advisor_joint }}
-
 @push('scripts')
     <script>
         function goBack() {
