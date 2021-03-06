@@ -170,7 +170,7 @@
                 <label class="col-md-4 col-form-label text-md-right">ส่วนที่ {{ $key + 1 }} : </label>
                 <label class="col-md-2 col-form-label text-md-left">{{ $item->description }}</label>
                 <div class="col-md-6">
-                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}" required class="form-control-file">
+                    <input type="file" accept="application/pdf" name="file_{{ $item->id }}" class="form-control-file">
                     @error('file_{{ $item->id }}')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

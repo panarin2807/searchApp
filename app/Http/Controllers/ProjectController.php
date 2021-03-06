@@ -105,8 +105,10 @@ class ProjectController extends Controller
                     'value' => $path,
                 ]);
             } else {
-                DB::table('projects')->where('id', $projectId)->delete();
-                return back()->with(['error' => 'เพิ่มโครงงานไม่สำเร็จ']);
+                DB::table('project_files')->insert([
+                    'project_id' => $projectId,
+                    'config_id' => $value->id,
+                ]);
             }
         }
 
@@ -231,7 +233,7 @@ class ProjectController extends Controller
 
         $teachers = $request->get('teacher');
 
-        $users = array_merge($students,$teachers);
+        $users = array_merge($students, $teachers);
 
         DB::table('project_relas')->where('project_id', $id)->whereNotIn('user_id', $users)->delete();
 

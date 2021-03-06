@@ -48,13 +48,11 @@ class ProjectFileSeeder extends Seeder
         DB::table('project_files')->insert([
             'project_id' => 1,
             'config_id' => 6,
-            'value' => 'file/2021/1/ch_5.pdf'
         ]);
 
         DB::table('project_files')->insert([
             'project_id' => 1,
             'config_id' => 7,
-            'value' => 'file/2021/1/back.pdf'
         ]);
     }
 }

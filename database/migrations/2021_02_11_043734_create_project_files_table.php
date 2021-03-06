@@ -17,7 +17,7 @@ class CreateProjectFilesTable extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained();
             $table->foreignId('config_id')->constrained();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }
