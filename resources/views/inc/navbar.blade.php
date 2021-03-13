@@ -49,7 +49,7 @@
                             </a>
                         @endif
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a href="{{ route('home') }}" class="dropdown-item">Dashboard</a>
+                            {{-- <a href="{{ route('home') }}" class="dropdown-item">Dashboard</a> --}}
                             @if (Auth::guard('web')->user()->type != 2)
                                 <a href="{{ url('user/' . Auth::guard('web')->user()->id . '/edit') }}"
                                     class="dropdown-item">Account Setting</a>
