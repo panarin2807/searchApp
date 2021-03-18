@@ -17,7 +17,7 @@ class CreateProjectRelasTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('project_id')->constrained();
-            $table->unique(['user_id', 'project_id']);
+            $table->unique(['user_id', 'project_id'],'user_project_index');
             $table->timestamps();
         });
     }

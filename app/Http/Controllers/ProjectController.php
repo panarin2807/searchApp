@@ -241,14 +241,14 @@ class ProjectController extends Controller
             DB::table('project_relas')->upsert([
                 'user_id' => $value,
                 'project_id' => $id
-            ], 'project_relas_user_id_project_id_unique');
+            ], 'user_project_index');
         }
 
         foreach ($teachers as $key => $value) {
             DB::table('project_relas')->upsert([
                 'user_id' => $value,
                 'project_id' => $id
-            ], 'project_relas_user_id_project_id_unique');
+            ], 'user_project_index');
         }
 
         return redirect()->action([ProjectController::class, 'index'])->with('status', 'แก้ไขโครงงานสำเร็จ');
