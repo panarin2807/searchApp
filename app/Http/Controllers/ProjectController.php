@@ -199,7 +199,11 @@ class ProjectController extends Controller
 
         $files = DB::table('project_files')->where('project_id', $id)->get();
 
-        $year = explode('/', $files[0]->value)[1];
+        if (count($files) > 0) {
+            $year = explode('/', $files[0]->value)[1];
+        } else {
+            $year = date('Y');
+        }
 
         foreach ($configs as $value) {
             if ($request->hasFile('file_' . $value->id)) {

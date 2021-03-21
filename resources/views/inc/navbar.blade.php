@@ -30,6 +30,7 @@
                             </div>
                         </li>
                     @endif
+                    <a href="{{ url('/home') }}" class="nav-link">ค้นหาโครงงาน</a>
                     <a href="{{ route('project.create') }}" class="nav-link">เพิ่มโครงงาน</a>
                     <li class="nav-item dropdown">
                         @if (Auth::guard('web')->user()->type == 0)

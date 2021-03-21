@@ -53,36 +53,66 @@
         <main class="container-fluid mt-4">
             @yield('content')
         </main>
-        {{-- Success Alert --}}
-        @if (session('status'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+    </div>
 
-        {{-- Error Alert --}}
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-
-        <script>
-            //close the alert after 3 seconds.
+    @if (Session::has('error') || Session::has('status'))
+        <script type="text/javascript">
             $(document).ready(function() {
+                $('#showModal').modal();
                 setTimeout(function() {
-                    $(".alert").alert('close');
+                    $('#showModal').modal('hide');
                 }, 1500);
             });
 
         </script>
-    </div>
+        <div id="showModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="showModalLabel"
+            style="display: block; padding-right: 16px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <h5>{{ Session::get('error') ?? Session::get('status') }}</h5>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    {{-- Success Alert --}}
+    {{-- @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif --}}
+
+    {{-- Error Alert --}}
+    {{-- @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif --}}
+
+    {{-- <script>
+        //close the alert after 3 seconds.
+        $(document).ready(function() {
+
+            setTimeout(function() {
+                $(".alert").alert('close');
+            }, 1500);
+        });
+
+    </script> --}}
+
 </body>
 
 </html>
