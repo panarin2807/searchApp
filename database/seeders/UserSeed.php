@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Prefix;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -17,10 +18,13 @@ class UserSeed extends Seeder
     public function run()
     {
         //
+
+        $prefixes = Prefix::all();
+
         DB::table('users')->insert([
             'fname' => 'ภานรินทร์',
             'lname' => 'อิ่นแก้ว',
-            'prefix_id' => 3,
+            'prefix_id' => $prefixes[2]->id,
             'email' => 'student@gmail.com',
             'username' => 'student',
             'password' => Hash::make('123456'),
@@ -30,7 +34,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'พุธิตา',
             'lname' => 'เจือจันทร์',
-            'prefix_id' => 3,
+            'prefix_id' => $prefixes[2]->id,
             'email' => 'student2@gmail.com',
             'username' => 'student2',
             'password' => Hash::make('123456'),
@@ -40,7 +44,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'วิชุดา',
             'lname' => 'ไชยศิวามงคล',
-            'prefix_id' => 3,
+            'prefix_id' => $prefixes[2]->id,
             'email' => 'teacher@gmail.com',
             'username' => 'teacher',
             'password' => Hash::make('123456'),
@@ -50,7 +54,7 @@ class UserSeed extends Seeder
         DB::table('users')->insert([
             'fname' => 'Admin',
             'lname' => 'Admin',
-            'prefix_id' => 1,
+            'prefix_id' => $prefixes[0]->id,
             'email' => 'admin@gmail.com',
             'username' => 'adminadmin',
             'password' => Hash::make('123456'),
