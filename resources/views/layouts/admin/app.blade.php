@@ -53,6 +53,25 @@
         <main class="container-fluid mt-4">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-12">
+                    {{-- Success Alert --}}
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
+
+                    {{-- Error Alert --}}
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-header text-center">@yield('header')</div>
                         <div class="card-body">
@@ -64,7 +83,7 @@
         </main>
     </div>
 
-    @if (Session::has('error') || Session::has('status'))
+    {{-- @if (Session::has('error') || Session::has('status'))
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#showModal').modal();
@@ -89,29 +108,9 @@
                 </div>
             </div>
         </div>
-    @endif
-
-    {{-- Success Alert --}}
-    {{-- @if (session('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('status') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
     @endif --}}
 
-    {{-- Error Alert --}}
-    {{-- @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif --}}
-
-    {{-- <script>
+    <script>
         //close the alert after 3 seconds.
         $(document).ready(function() {
 
@@ -120,7 +119,7 @@
             }, 1500);
         });
 
-    </script> --}}
+    </script>
 </body>
 
 </html>
