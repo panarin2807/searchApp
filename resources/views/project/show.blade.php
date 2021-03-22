@@ -38,9 +38,12 @@ $teacherCount = 0;
                     นักศึกษาคนที่ {{ $studentCount }} :
                 </div>
                 <div class="col-9">
-                    {{$rela->user->prefix->name}}{{ $rela->user->fname }} {{ $rela->user->lname }}
+                    {{ $rela->user->prefix->name }}{{ $rela->user->fname }} {{ $rela->user->lname }}
                 </div>
-            @else
+            @endif
+        @endforeach
+        @foreach ($project->relas as $rela)
+            @if ($rela->user->type != 0)
                 @php
                     $teacherCount++;
                 @endphp
@@ -48,7 +51,7 @@ $teacherCount = 0;
                     อาจารย์ที่ปรึกษาหลักคนที่ {{ $teacherCount }} :
                 </div>
                 <div class="col-9">
-                    {{$rela->user->prefix->name}}{{ $rela->user->fname }} {{ $rela->user->lname }}
+                    {{ $rela->user->prefix->name }}{{ $rela->user->fname }} {{ $rela->user->lname }}
                 </div>
             @endif
         @endforeach
@@ -101,17 +104,17 @@ $teacherCount = 0;
                             </td>
                             <td>
                                 @php
-                                if(Storage::disk('public')->exists($file->value)){
-                                    $size = Storage::size($file->value)/1000;
-                                    if($size >= 1000){
-                                        $size = $size / 1000;
-                                        echo round($size,2).' MB';
-                                    }else{
-                                        echo round($size,2) . ' kB';
+                                    if (Storage::disk('public')->exists($file->value)) {
+                                        $size = Storage::size($file->value) / 1000;
+                                        if ($size >= 1000) {
+                                            $size = $size / 1000;
+                                            echo round($size, 2) . ' MB';
+                                        } else {
+                                            echo round($size, 2) . ' kB';
+                                        }
+                                    } else {
+                                        echo '0 B';
                                     }
-                                }else{
-                                    echo '0 B';
-                                }
                                 @endphp
                             </td>
                             <td>
@@ -119,9 +122,9 @@ $teacherCount = 0;
                             </td>
                             <td>
                                 @if (Storage::disk('public')->exists($file->value))
-                                <a href="{{ asset('storage/' . $file->value) }}" class="btn btn-primary">View</a>
+                                    <a href="{{ asset('storage/' . $file->value) }}" class="btn btn-primary">View</a>
                                 @else
-                                <button class="btn btn-primary" disabled>View</button>
+                                    <button class="btn btn-primary" disabled>View</button>
                                 @endif
                             </td>
                         </tr>

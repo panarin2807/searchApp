@@ -34,7 +34,7 @@ class SearchController extends Controller
             // 'column.required' => 'กรุณาเลือก Field ที่ต้องการค้นหา'
         ];
 
-        $request->validate($rule, $message);
+        //$request->validate($rule, $message);
 
         $group = $request->get('group'); //where in
         $curr = $request->get('curr'); // where in
