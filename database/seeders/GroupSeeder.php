@@ -21,13 +21,13 @@ class GroupSeeder extends Seeder
         ]);
 
         DB::table('groups')->insert([
-            'name' => 'Forecasting, Inventory, Regression, QC',
-            'detail' => 'Forecasting, Inventory, Regression, QC',
+            'name' => 'Forecasting, Inventory, QC',
+            'detail' => 'Forecasting, Inventory, QC',
         ]);
 
         DB::table('groups')->insert([
-            'name' => 'Stat Theory, Multivariate, Regression',
-            'detail' => 'Stat Theory, Multivariate, Regression',
+            'name' => 'Stat Theory, Multivariate, Risk',
+            'detail' => 'Stat Theory, Multivariate, Risk',
         ]);
 
         DB::table('groups')->insert([

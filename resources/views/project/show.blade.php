@@ -48,7 +48,7 @@ $teacherCount = 0;
                     $teacherCount++;
                 @endphp
                 <div class="col-3">
-                    อาจารย์ที่ปรึกษาหลักคนที่ {{ $teacherCount }} :
+                    อาจารย์ที่ปรึกษาหลัก :
                 </div>
                 <div class="col-9">
                     {{ $rela->user->prefix->name }}{{ $rela->user->fname }} {{ $rela->user->lname }}
