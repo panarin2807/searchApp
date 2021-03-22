@@ -56,7 +56,7 @@ $teacherCount = 0;
             @endif
         @endforeach
         <div class="col-3">
-            อาจารย์ที่ปรึกษาร่วม :
+            อาจารย์ที่ปรึกษาร่วมasdasdasd :
         </div>
         <div class="col-9">
             {{ $project->advisor_joint }}
