@@ -93,7 +93,7 @@ $teacherCount = 0;
                 </tr>
             </thead>
             <tbody>
-                @foreach ($project->files as $file)
+                @foreach ($project->files as $key => $file)
                     @if ($file->config->status == 1)
                         <tr>
                             <td>
@@ -104,8 +104,8 @@ $teacherCount = 0;
                             </td>
                             <td>
                                 @php
-                                    if (Storage::disk('public')->exists($file->value)) {
-                                        $size = Storage::size($file->value) / 1000;
+                                    if (Storage::disk('s3')->exists($file->value)) {
+                                        $size = Storage::disk('s3')->size($file->value) / 1000;
                                         if ($size >= 1000) {
                                             $size = $size / 1000;
                                             echo round($size, 2) . ' MB';
@@ -121,8 +121,8 @@ $teacherCount = 0;
                                 {{ pathinfo($file->value, PATHINFO_EXTENSION) }}
                             </td>
                             <td>
-                                @if (Storage::disk('public')->exists($file->value))
-                                    <a href="{{ asset('storage/' . $file->value) }}" class="btn btn-primary">View</a>
+                                @if (Storage::disk('s3')->exists($file->value))
+                                    <a target="_blank" href="{{ Storage::disk('s3')->url($file->value) }}" class="btn btn-primary">View</a>
                                 @else
                                     <button class="btn btn-primary" disabled>View</button>
                                 @endif
