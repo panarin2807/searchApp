@@ -9,8 +9,7 @@
 @endsection
 
 @section('content')
-    <Form method="POST" id="form-id"  action="{{ route('project.store') }}"
-        enctype="multipart/form-data">
+    <Form method="POST" id="form-id" action="{{ route('project.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row">
@@ -258,10 +257,19 @@
             })
 
             $('#add-teacher').on('click', function(e) {
+                var old = $('#teacher_joint').val();
+                var val = [];
+                val = val.concat(old);
+                console.log(val);
                 var text = $('#new_teacher').val();
-                $("#teacher_joint").append('<option value="' + text + '" selected>' + text +
+                val.push(text)
+                $("#teacher_joint").append('<option value="' + text + '">' + text +
                     '</option>');
                 $("#teacher_joint").selectpicker("refresh");
+                $("#teacher_joint").selectpicker("val", val);
+                // $("#teacher_joint").val(text);
+                // $("#teacher_joint").selectpicker("refresh");
+
             });
 
 

@@ -100,7 +100,7 @@ class ProjectController extends Controller
 
                 $file = $request->file('file_' . $value->id);
                 $name = $value->description . '.pdf';
-                $path = 'file/' . $name;
+                $path = 'file/' . $year . '/' . $projectId . '/' . $name;
                 Storage::disk('s3')->put($path, file_get_contents($file), 'public-read');
                 DB::table('project_files')->insert([
                     'project_id' => $projectId,
@@ -221,7 +221,7 @@ class ProjectController extends Controller
 
                 $file = $request->file('file_' . $value->id);
                 $name = $value->description . '.pdf';
-                $path = 'file/' . $name;
+                $path = 'file/' . $year . '/' . $id . '/' . $name;
                 Storage::disk('s3')->put($path, file_get_contents($file), 'public-read');
                 DB::table('project_files')->where([
                     ['project_id', $id],
