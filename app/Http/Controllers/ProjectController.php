@@ -204,23 +204,23 @@ class ProjectController extends Controller
         foreach ($configs as $value) {
             if ($request->hasFile('file_' . $value->id)) {
 
-                $file = $request->file('file_' . $value->id);
-                $name = $value->description . '.pdf';
-                $path = 'file/' . $year . '/' . $projectId . '/' . $name;
-                Storage::disk('s3')->put($path, file_get_contents($file), 'public-read');
-                DB::table('project_files')->insert([
-                    'project_id' => $projectId,
-                    'config_id' => $value->id,
-                    'value' => $path,
-                ]);
-
                 // $file = $request->file('file_' . $value->id);
-                // $path = $file->storeAs('file/' . $year . '/' . $projectId, $value->description . '.pdf');
+                // $name = $value->description . '.pdf';
+                // $path = 'file/' . $year . '/' . $projectId . '/' . $name;
+                // Storage::disk('s3')->put($path, file_get_contents($file), 'public-read');
                 // DB::table('project_files')->insert([
                 //     'project_id' => $projectId,
                 //     'config_id' => $value->id,
                 //     'value' => $path,
                 // ]);
+
+                $file = $request->file('file_' . $value->id);
+                $path = $file->storeAs('file/' . $year . '/' . $projectId, $value->description . '.pdf');
+                DB::table('project_files')->insert([
+                    'project_id' => $projectId,
+                    'config_id' => $value->id,
+                    'value' => $path,
+                ]);
             } else {
                 DB::table('project_files')->insert([
                     'project_id' => $projectId,
@@ -325,25 +325,25 @@ class ProjectController extends Controller
         foreach ($configs as $value) {
             if ($request->hasFile('file_' . $value->id)) {
 
-                $file = $request->file('file_' . $value->id);
-                $name = $value->description . '.pdf';
-                $path = 'file/' . $year . '/' . $id . '/' . $name;
-                Storage::disk('s3')->put($path, file_get_contents($file), 'public-read');
-                DB::table('project_files')->where([
-                    ['project_id', $id],
-                    ['config_id', $value->id]
-                ])->update([
-                    'value' => $path,
-                ]);
-
                 // $file = $request->file('file_' . $value->id);
-                // $path = $file->storeAs('file/' . $year . '/' . $id, $value->description . '.pdf');
+                // $name = $value->description . '.pdf';
+                // $path = 'file/' . $year . '/' . $id . '/' . $name;
+                // Storage::disk('s3')->put($path, file_get_contents($file), 'public-read');
                 // DB::table('project_files')->where([
                 //     ['project_id', $id],
                 //     ['config_id', $value->id]
                 // ])->update([
                 //     'value' => $path,
                 // ]);
+
+                $file = $request->file('file_' . $value->id);
+                $path = $file->storeAs('file/' . $year . '/' . $id, $value->description . '.pdf');
+                DB::table('project_files')->where([
+                    ['project_id', $id],
+                    ['config_id', $value->id]
+                ])->update([
+                    'value' => $path,
+                ]);
             }
         }
 
