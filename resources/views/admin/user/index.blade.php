@@ -57,6 +57,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$students->links()}}
     </div>
     <div class="row justify-content-between mx-auto my-2">
         <label for="teacher_table">ข้อมูลบุคลากร</label>

@@ -20,6 +20,21 @@ class UsersImport implements ToModel
 
         $password = substr($usernameWithoutDash, -6);
 
+        $user = User::where('username', $row[1])->first();
+
+        if ($user) {
+            $user->prefix_id = $row[0];
+            $user->fname = $row[2];
+            $user->lname = $row[3];
+            $user->username = $row[1];
+            $user->email = $row[4];
+            $user->password = Hash::make($password);
+            $user->type = 0;
+            $user->status = 1;
+            $user->save();
+            return null;
+        }
+
         return new User([
             'prefix_id' => $row[0],
             'fname' => $row[2],
