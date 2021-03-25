@@ -21,8 +21,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $students = User::where('type', 0)->get();
-        $teacher = User::where('type', 1)->get();
+        $students = User::where('type', 0)->simplePaginate(10,['*'],'student');
+        $teacher = User::where('type', 1)->simplePaginate(10,['*'],'teacher');
         return view('admin.user.index', ['students' => $students, 'teachers' => $teacher]);
     }
 
