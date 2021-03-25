@@ -7,8 +7,10 @@ use App\Models\Curriculum;
 use App\Models\Group;
 use App\Models\Project;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Project as ReflectionProject;
 
@@ -22,9 +24,113 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        $projects = Project::where('status', 1)->simplePaginate(5);
+        // $projects = Project::where('status', 1)->simplePaginate(5);
+        // $keyword = 'asdasd';
+        // $projects2 = Project::where('status', 1)
+        //     ->where('name_th', 'like', '%' . $keyword . '%')
+        //     ->orWhere([
+        //         ['name_en', 'like', '%' . $keyword . '%'],
+        //         ['year', 'like', '%' . $keyword . '%'],
+        //     ])
+        //     ->orWhereHas('users', function ($query) use ($keyword) {
+        //         $query->where('fname', 'like', '%' . $keyword . '%');
+        //         $query->orWhere('lname', 'like', '%' . $keyword . '%');
+        //     })
+        //     ->simplePaginate(5);
         //$groups = Group::findOrFail(4));
-        return view('admin.project.index', compact('projects'));
+        return view('admin.project.index');
+        // return view('admin.project.index', compact('projects', 'projects2'));
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        if (is_numeric($keyword)) {
+            $keyword -= 543;
+        }
+
+        if ($request->ajax()) {
+            $output = "";
+            if ($keyword == '') {
+                $projects = Project::where('status', 1)
+                    ->where('name_th', 'like', '%' . $keyword . '%')
+                    ->orWhere('name_en', 'like', '%' . $keyword . '%')
+                    ->orWhere('year', 'like', '%' . $keyword . '%')
+                    ->orWhereHas('users', function ($query) use ($keyword) {
+                        $query->where('fname', 'like', '%' . $keyword . '%');
+                        $query->orWhere('lname', 'like', '%' . $keyword . '%');
+                    })
+                    ->simplePaginate(10);
+            } else {
+                $projects = Project::where('status', 1)
+                    ->where('name_th', 'like', '%' . $keyword . '%')
+                    ->orWhere('name_en', 'like', '%' . $keyword . '%')
+                    ->orWhere('year', 'like', '%' . $keyword . '%')
+                    ->orWhereHas('users', function ($query) use ($keyword) {
+                        $query->where('fname', 'like', '%' . $keyword . '%');
+                        $query->orWhere('lname', 'like', '%' . $keyword . '%');
+                    })
+                    ->get();
+            }
+
+            foreach ($projects as $item) {
+                $students = [];
+                $teachers = [];
+                foreach ($item->relas as $rela) {
+                    if ($rela->user->type == 0) {
+                        array_push($students, $rela->user);
+                    } else {
+                        array_push($teachers, $rela->user);
+                    }
+                }
+                $studentCount = count($students);
+                $teacherCount = count($teachers);
+                $output .= '
+                <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-body row">
+                        <a href="' . route('project.edit', $item->id) . '" style="text-decoration: none;">
+                            <div class="col-md-12">
+                                ' . $item->name_th . '
+                            </div>
+                            <div class="col-md-12">
+                                ' . $item->name_en . '
+                            </div>
+                        </a>
+                        <div class="col-md-12">
+                            <span>โดย : </span>';
+                foreach ($students as $key => $val) {
+                    if ($key == $studentCount - 1) {
+                        $output .= '<span>' . $val->fname . ' ' . $val->lname . '</span></div>';
+                    } else {
+                        $output .= '<span>' . $val->fname . ' ' . $val->lname . ',' . '</span>';
+                    }
+                }
+                $output .= '
+                <div class="col-md-12">
+                <span>อาจารย์ที่ปรึกษาหลัก : </span>
+                ';
+                foreach ($teachers as $key => $val) {
+                    if ($key == $teacherCount - 1) {
+                        $output .= '<span>' . $val->fname . ' ' . $val->lname . '</span></div>';
+                    } else {
+                        $output .= '<span>' . $val->fname . ' ' . $val->lname . ',' . '</span>';
+                    }
+                }
+                $output .= '<div class="col-md-12"> ปี : ' . $item->year + 543 . '</div></div>';
+                $output .= '
+                <div class="row justify-content-center">
+                    <form action="' . route('project.destroy', $item) . '" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="_token" value="' . csrf_token() . '">
+                        <button class="btn" type="submit"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </div></div></div>
+                ';
+            }
+
+            return Response($output);
+        }
     }
 
     /**

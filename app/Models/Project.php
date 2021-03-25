@@ -24,13 +24,19 @@ class Project extends Model
         //return $this->hasOne(Curriculum::class);
     }
 
-    public function files(){
+    public function files()
+    {
         return $this->hasMany(ProjectFile::class);
     }
 
     public function relas()
     {
         return $this->hasMany(ProjectRela::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'project_relas');
     }
 
     public function curricular()

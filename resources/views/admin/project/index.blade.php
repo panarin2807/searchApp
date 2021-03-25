@@ -6,7 +6,7 @@
             <input type="text" id="filter" class="form-control" placeholder="ค้นหา">
         </div>
     </div>
-    <div id="show" class="row">
+    {{-- <div id="show" class="row">
         @foreach ($projects as $item)
             @php
                 $students = [];
@@ -75,21 +75,53 @@
             </div>
         @endforeach
     </div>
-    <div class="row justify-content-end mt-4">
+    <div id="show-link" class="row justify-content-end mt-4">
         <div class="col-md-2">
             {{ $projects->links() }}
         </div>
-    </div>
+    </div> --}}
+    <div id="data" class="row"></div>
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            $.ajax({
+                /* the route pointing to the post function */
+                url: '/live',
+                type: 'GET',
+                data: {
+                    'search': ''
+                },
+                success: function(data) {
+                    $('#data').html(data);
+                }
+            });
+
+
             $('#filter').on('keyup', function() {
-                var value = $(this).val();
-                $('#show div .card').filter(function() {
-                    $(this).toggle($(this).text().indexOf(value) > -1)
-                })
+                var val = $(this).val();
+
+                $.ajax({
+                    /* the route pointing to the post function */
+                    url: '/live',
+                    type: 'GET',
+                    data: {
+                        'search': val
+                    },
+                    success: function(data) {
+                        $('#data').html(data);
+                    }
+                });
+
+
+
+
+                // var value = $(this).val();
+                // $('#show div .card').filter(function() {
+                //     $(this).toggle($(this).text().indexOf(value) > -1)
+                // })
             });
         })
 

@@ -20,6 +20,8 @@ Route::get('/', function () {
     return redirect()->action([LoginController::class, 'showLoginForm']);
 });
 
+Route::get('/live','ProjectController@search');
+
 Route::middleware(['auth', 'Admin'])->group(function () {
     Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
