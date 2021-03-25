@@ -107,6 +107,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$teachers->links()}}
     </div>
     <!-- Modal -->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
