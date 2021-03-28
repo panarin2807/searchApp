@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }}">
-            <img src="{{ asset('image/nav_logo.png') }}" height="auto" width="100%" style="max-width: 280px"/>
+            <img src="{{ asset('image/nav_logo.png') }}" height="auto" width="100%" style="max-width: 280px" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -51,10 +51,12 @@
                         @endif
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             {{-- <a href="{{ route('home') }}" class="dropdown-item">Dashboard</a> --}}
-                            @if (Auth::guard('web')->user()->type != 2)
+                            {{-- @if (Auth::guard('web')->user()->type != 2)
                                 <a href="{{ url('user/' . Auth::guard('web')->user()->id . '/edit') }}"
                                     class="dropdown-item">Account Setting</a>
-                            @endif
+                            @endif --}}
+                            <a href="{{ url('user/' . Auth::guard('web')->user()->id . '/edit') }}"
+                                class="dropdown-item">Account Setting</a>
                             <a class="dropdown-item" href="#"
                                 onclick="event.preventDefault();document.querySelector('#logout-form').submit();">
                                 Logout
