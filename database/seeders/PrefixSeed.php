@@ -25,8 +25,9 @@ class PrefixSeed extends Seeder
             'ศาสตราจารย์',
         ];
 
-        foreach ($prefixes as $value) {
+        foreach ($prefixes as $K => $value) {
             DB::table('prefixes')->insert([
+                'id' => $K+1,
                 'name' => $value
             ]);
         }
