@@ -22,5 +22,11 @@ class CurriculumSeeder extends Seeder
         DB::table('curricula')->insert([
             'name' => 'สารสนเทศสถิติ'
         ]);
+        DB::table('curricula')->insert([
+            'name' => 'สารสนเทศสถิติ'
+        ]);
+        DB::table('curricula')->insert([
+            'name' => 'สารสนเทศสถิติและวิทยาการข้อมูล'
+        ]);       
     }
 }
