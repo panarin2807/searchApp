@@ -187,10 +187,12 @@ class ProjectController extends Controller
 
         $teachers = $request->get('teacher');
 
+        $year = $request->get('year');
+
         $projectId = DB::table('projects')->insertGetId([
             'name_th' => $request->get('name_th'),
             'name_en' => $request->get('name_en'),
-            'year' => $request->get('year'),
+            'year' => $year,
             'advisor_joint' => $request->input('select_teacher_joint'),
             'abstract' => $request->get('abstract'),
             'group_id' => $request->get('group'),
@@ -198,8 +200,6 @@ class ProjectController extends Controller
         ]);
 
         $path = '';
-
-        $year = date("Y");
 
         foreach ($configs as $value) {
             if ($request->hasFile('file_' . $value->id)) {
@@ -316,11 +316,7 @@ class ProjectController extends Controller
 
         $files = DB::table('project_files')->where('project_id', $id)->get();
 
-        if (count($files) > 0) {
-            $year = explode('/', $files[0]->value)[1];
-        } else {
-            $year = date('Y');
-        }
+        $year = $request->get('year');
 
         foreach ($configs as $value) {
             if ($request->hasFile('file_' . $value->id)) {
