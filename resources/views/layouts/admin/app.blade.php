@@ -116,7 +116,7 @@
 
             setTimeout(function() {
                 $(".alert").alert('close');
-            }, 1500);
+            }, 60000);
         });
 
     </script>
