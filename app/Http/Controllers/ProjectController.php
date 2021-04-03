@@ -394,8 +394,8 @@ class ProjectController extends Controller
         //
         $project = Project::findOrFail($id);
         $files = DB::table('project_files')->where('project_id', $project->id)->get();
-        $path = explode('/', $files[0]->value);
-        Storage::deleteDirectory($path[0] . '/' . $path[1] . '/' . $path[2]);
+        //$path = explode('/', $files[0]->value);
+        //Storage::deleteDirectory($path[0] . '/' . $path[1] . '/' . $path[2]);
         DB::table('project_files')->where('project_id', $project->id)->delete();
         DB::table('project_relas')->where('project_id', $project->id)->delete();
         $project->delete();
