@@ -10,6 +10,7 @@ use App\Models\UserType;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Imports\UsersImport;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -21,9 +22,45 @@ class UserController extends Controller
      */
     public function index()
     {
-        $students = User::where('type', 0)->simplePaginate(10,['*'],'student');
-        $teacher = User::where('type', 1)->simplePaginate(10,['*'],'teacher');
-        return view('admin.user.index', ['students' => $students, 'teachers' => $teacher]);
+        $students = User::where('type', 0)->simplePaginate(10, ['*'], 'student');
+        return view('admin.user.index', ['students' => $students]);
+    }
+
+    public function getPersonel()
+    {
+        $teachers = User::where('type', 1)->simplePaginate(10, ['*'], 'teacher');
+        return view('admin.user.personel', compact('teachers'));
+    }
+
+    public function fetch_student(Request $request)
+    {
+        // $teacher = User::where('type', 1)->simplePaginate(10, ['*'], 'teacher');
+        if ($request->ajax()) {
+            $key = $request->get('query');
+
+            if ($key == '') {
+                $students = DB::table('users as u')
+                    ->select('u.id', 'u.fname', 'u.lname', 'u.email', 'p.name', 'u.status')
+                    ->join('prefixes as p', 'u.prefix_id', '=', 'p.id')
+                    ->where('u.type', 0)
+                    ->simplePaginate(10, ['*'], 'student');
+            } else {
+                $key = str_replace(' ', '%', $key);
+                $students = DB::table('users as u')
+                    ->select('u.id', 'u.fname', 'u.lname', 'u.email', 'p.name', 'u.status')
+                    ->join('prefixes as p', 'u.prefix_id', '=', 'p.id')
+                    ->where('u.id', 'like', '%' . $key . '%')
+                    ->orWhere('u.fname', 'like', '%' . $key . '%')
+                    ->orWhere('u.lname', 'like', '%' . $key . '%')
+                    ->orWhere('u.username', 'like', '%' . $key . '%')
+                    ->orWhere('u.email', 'like', '%' . $key . '%')
+                    ->where('u.type', 0)
+                    ->simplePaginate(10, ['*'], 'student');
+            }
+            $link = false;
+            // return view('admin.user.index', ['students' => $students, 'teachers' => $teacher, 'link' => $link])->render();
+            return view('admin.user.student_data', compact('students', 'link'))->render();
+        }
     }
 
     public function showImport()

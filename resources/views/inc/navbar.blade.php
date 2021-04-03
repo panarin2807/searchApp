@@ -14,7 +14,17 @@
                 <!-- Authentication Links -->
                 @if (Auth::guard('web')->check())
                     @if (Auth::guard('web')->user()->type == 2)
-                        <a href="{{ URL::to('admin/user') }}" class="nav-link">จัดการผู้ใช้</a>
+                        {{-- <a href="{{ URL::to('admin/user') }}" class="nav-link">จัดการผู้ใช้</a> --}}
+                        <li class="nav-item dropdown">
+                            <a href="#" id="reportDropdown" class="nav-link dropdown-toggle" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>จัดการผู้ใช้</a>
+
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportDropdown">
+                                <a href="{{ URL::to('admin/user') }}" class="dropdown-item">นักศึกษา</a>
+                                <a href="{{ route('admin.managePersonel') }}" class="dropdown-item">บุคลากร</a>
+                            </div>
+                        </li>
                         <a href="{{ route('project.index') }}" class="nav-link">จัดการโครงงาน</a>
                         {{-- <a href="{{ route('admin.setting') }}" class="nav-link">ตั้งค่า Config</a> --}}
                     @endif

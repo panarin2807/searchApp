@@ -20,13 +20,16 @@ Route::get('/', function () {
     return redirect()->action([LoginController::class, 'showLoginForm']);
 });
 
-Route::get('/live','ProjectController@search');
+Route::get('/live', 'ProjectController@search');
 
 Route::middleware(['auth', 'Admin'])->group(function () {
     Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         Route::get('/setting', 'SettingAppController@index')->name('setting');
+        Route::get('user/fetch_student', 'UserController@fetch_student');
+        Route::get('user/personel','UserController@getPersonel')->name('managePersonel');
         Route::resource('user', 'UserController');
+        
     });
 });
 

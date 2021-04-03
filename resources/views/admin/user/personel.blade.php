@@ -6,20 +6,12 @@
 
 
 @section('content')
-
-    <input type="hidden" name="hidden_page" id="hidden_page" value="1">
     <div class="row justify-content-between mx-auto my-2">
-        <label for="student_table">ข้อมูลนักศึกษา</label>
-        <div class="input-group col-md-5">
-            <input type="text" class="form-control mr-2" name="search" id="search" placeholder="พิมพ์ข้อความค้นหา">
-            <div class="input-group-append">
-                <a href="{{ route('importExportView') }}" class="btn btn-success mr-2">นำเข้า</a>
-                <a href="{{ URL::to('admin/user/create') }}" class="btn btn-warning">เพิ่ม</a>
-            </div>
-        </div>
+        <label for="teacher_table">ข้อมูลบุคลากร</label>
+        <a href="{{ URL::to('admin/user/create') }}" class="btn btn-warning">เพิ่ม</a>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover table-striped table-sm">
+        <table class="table table-striped table-sm">
             <thead>
                 <tr>
                     <th>#</th>
@@ -31,10 +23,38 @@
                     <th class="text-center" style="width:10%"></th>
                 </tr>
             </thead>
-            <tbody id="user_body">
-                @include('admin.user.student_data')
+            <tbody>
+                @foreach ($teachers as $key => $val)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $val->prefix->name }}</td>
+                        <td>{{ $val->fname }}</td>
+                        <td>{{ $val->lname }}</td>
+                        <td>{{ $val->email }}</td>
+                        <td class="{{ $val->status == 1 ? 'text-success' : 'text-danger' }}">
+                            {{ $val->status == 1 ? 'Active' : 'Inactive' }}</td>
+                        <td class="text-right">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="{{ url('admin/user/' . $val->id . '/edit') }}"
+                                        class="btn btn-success btn-block btn-sm"><i class="fas fa-edit"></i></a>
+                                </div>
+                                <div class="col">
+                                    <form id="form" action="{{ url('/admin/user/' . $val->id) }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-primary btn-block btn-sm" type="submit"><i
+                                                class="fas fa-exchange-alt"></i></button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+        {{ $teachers->links() }}
     </div>
     <!-- Modal -->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -63,16 +83,6 @@
 
 @push('scripts')
     <script>
-        function fetch_user(page, query) {
-            $.ajax({
-                url: '/admin/user/fetch_student?student=' + page + '&query=' + query,
-                success: function(data) {
-                    $('#user_body').html('')
-                    $('#user_body').html(data)
-                }
-            })
-        }
-
         $(document).ready(function() {
             $('#confirm-delete').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget)
@@ -85,26 +95,6 @@
                 $('#form').attr('action', action + '/admin/user/' + id)
                 console.log(action);
             })
-
-            $('#search').on('keyup', function() {
-                var query = $(this).val()
-                var page = $('#hidden_page').val()
-                page = 1
-                fetch_user(page, query)
-            })
-
-            $(document).on('click', '.link nav a', function(event) {
-                event.preventDefault();
-                var page = $(this).attr('href').split('student=')[1];
-                $('#hidden_page').val(page);
-                var query = $('#search').val();
-
-                console.log(page);
-
-                // $('li').removeClass('active');
-                // $(this).parent().addClass('active');
-                fetch_user(page, query);
-            });
 
         });
 
