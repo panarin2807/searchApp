@@ -91,12 +91,11 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group row">
+                    <div class="form-group row" id="password-group" style="display: none">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
                         <div class="col-md-6">
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" 
+                                class="form-control @error('password') is-invalid @enderror" name="password"
                                 autocomplete="new-password">
 
                             @error('password')
@@ -108,20 +107,10 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="password-confirm"
-                            class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                        <div class="col-md-6">
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                 autocomplete="new-password">
-                        </div>
-                    </div> --}}
-
-                    <div class="form-group row">
                         <label for="user-type-select" class="col-md-4 col-form-label text-md-right">User Type</label>
 
                         <div class="col-md-6">
-                            <select name="type" class="form-control">
+                            <select name="type" id="type" class="form-control">
                                 @foreach ($types as $item)
                                     @if ($item->type == 0)
                                         <option value="{{ $item->type }}" selected>{{ $item->name }}</option>
@@ -151,34 +140,18 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // function setInputFilter(textbox, inputFilter) {
-            //     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(
-            //         function(event) {
-            //             textbox.addEventListener(event, function() {
-            //                 if (inputFilter(this.value)) {
-            //                     this.oldValue = this.value;
-            //                     this.oldSelectionStart = this.selectionStart;
-            //                     this.oldSelectionEnd = this.selectionEnd;
-            //                 } else if (this.hasOwnProperty("oldValue")) {
-            //                     this.value = this.oldValue;
-            //                     this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-            //                 } else {
-            //                     this.value = "";
-            //                 }
-            //             });
-            //         });
-            // }
-
-            // setInputFilter(document.getElementById("username"), function(value) {
-            //     return /^\d*$/.test(value);
-            // });
-
-            // var input = document.getElementById('username');
-            // input.addEventListener('input',function(){
-            //     if(input.value.length === 9){
-            //         input.value += '-';
-            //     }
-            // });
+            $('#type').on('change', function() {
+                if ($(this).val() == 2) {
+                    $('#password-group').show()
+                    $('#password').focus()
+                    $('#password').prop('required', true)
+                    $('#password').attr('minlength','6');
+                } else {
+                    $('#password-group').hide()
+                    $('#password').prop('required', false)
+                }
+                return false
+            })
         });
 
     </script>

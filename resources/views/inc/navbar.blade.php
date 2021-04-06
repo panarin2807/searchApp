@@ -23,6 +23,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportDropdown">
                                 <a href="{{ URL::to('admin/user') }}" class="dropdown-item">นักศึกษา</a>
                                 <a href="{{ route('admin.managePersonel') }}" class="dropdown-item">บุคลากร</a>
+                                <a href="{{ route('admin.manageAdmin') }}" class="dropdown-item">Admin</a>
                             </div>
                         </li>
                         <a href="{{ route('project.index') }}" class="nav-link">จัดการโครงงาน</a>

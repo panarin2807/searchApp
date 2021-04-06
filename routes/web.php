@@ -28,6 +28,7 @@ Route::middleware(['auth', 'Admin'])->group(function () {
         Route::get('/setting', 'SettingAppController@index')->name('setting');
         Route::get('user/fetch_student', 'UserController@fetch_student');
         Route::get('user/personel','UserController@getPersonel')->name('managePersonel');
+        Route::get('user/admin','UserController@getAdmin')->name('manageAdmin');
         Route::resource('user', 'UserController');
         
     });

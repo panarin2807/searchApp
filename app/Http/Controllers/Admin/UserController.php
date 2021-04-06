@@ -32,6 +32,12 @@ class UserController extends Controller
         return view('admin.user.personel', compact('teachers'));
     }
 
+    public function getAdmin()
+    {
+        $admins = User::where('type', 2)->simplePaginate(10);
+        return view('admin.user.admin', compact('admins'));
+    }
+
     public function fetch_student(Request $request)
     {
         // $teacher = User::where('type', 1)->simplePaginate(10, ['*'], 'teacher');
@@ -95,7 +101,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validator($request->all());
+        $this->validator($request->all())->validate();
 
         $user = new User();
 
@@ -105,15 +111,21 @@ class UserController extends Controller
 
         $password = substr($usernameWithoutDash, -6);
 
+        $type = $request->get('type') ?? 0;
+
         $user->prefix_id = $request->get('prefix');
         $user->fname = $request->get('fname');
         $user->lname = $request->get('lname');
         $user->email = $request->get('email');
         $user->username = $username;
-        $user->type = $request->get('type') ?? 0;
-        $user->password = Hash::make(
-            $password
-        );
+        $user->type = $type;
+        if ($type == 2) {
+            $user->password = Hash::make($request->get('password'));
+        } else {
+            $user->password = Hash::make(
+                $password
+            );
+        }
 
         $message = '';
 
@@ -166,6 +178,15 @@ class UserController extends Controller
                 'username' => ['required', 'string', 'min:6', 'max:100', 'unique:users'],
                 //'password' => ['required', 'string', 'min:6', 'confirmed'],
             ], $message);
+        } else {
+            return Validator::make($data, [
+                'prefix' => ['required'],
+                'fname' => ['required', 'string', 'max:100'],
+                'lname' => ['required', 'string', 'max:100'],
+                'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+                'username' => ['required', 'string', 'min:6', 'max:100', 'unique:users'],
+                'password' => ['required', 'string', 'min:6'],
+            ], $message);
         }
     }
 
@@ -203,6 +224,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        // dd($request->get('type'));
 
         if ($request->filled('password')) {
             $request->validate([

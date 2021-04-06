@@ -118,23 +118,25 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="user-type-select" class="col-md-4 col-form-label text-md-right">User Type</label>
+                    @if ($user->type != 2)
+                        <div class="form-group row">
+                            <label for="user-type-select" class="col-md-4 col-form-label text-md-right">User Type</label>
 
-                        <div class="col-md-6">
-                            <select name="type" class="form-control">
-                                @foreach ($types as $item)
-                                    @if ($item->type == $user->type)
-                                        <option value="{{ $item->type }}" selected>{{ $item->name }}</option>
-                                    @else
-                                        <option value="{{ $item->type }}">{{ $item->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+                            <div class="col-md-6">
+                                <select name="type" class="form-control">
+                                    @foreach ($types as $item)
+                                        @if ($item->type == $user->type)
+                                            <option value="{{ $item->type }}" selected>{{ $item->name }}</option>
+                                        @else
+                                            <option value="{{ $item->type }}">{{ $item->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-
-
+                    @else
+                        <input type="hidden" name="type" value="{{ $user->type }}">
+                    @endif
 
                     <div class="container">
                         <div class="col-md-12 text-center">
