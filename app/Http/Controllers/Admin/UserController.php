@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->validator($request->all());
 
         $user = new User();
 
