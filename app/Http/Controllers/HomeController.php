@@ -30,7 +30,7 @@ class HomeController extends Controller
         $groups = Group::where('status', 1)->get();
         //$projects = Project::where('status', 1)->orderBy('created_at', 'desc')->take(5)->get();
         $fields = ['name_th' => 'ชื่อภาษาไทย', 'name_en' => 'ชื่อภาษาอังกฤษ', 'abstract' => 'บทคัดย่อ', 'advisor_joint' => 'อาจารย์ที่ปรึกษา'];
-        return view('home', ['projects' => [], 'currs' => $currs, 'groups' => $groups, 'fields' => $fields]);
+        return view('home', ['projects' => [], 'currs' => $currs, 'groups' => $groups, 'fields' => $fields, 'isInit' => true]);
     }
 
     public function search(Request $request)

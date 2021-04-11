@@ -90,6 +90,8 @@ class SearchController extends Controller
             })
             ->get();
 
+        $isInit = false;
+
         if ($teacher != null) {
             //return back()->with('status','teacher id : '.$teacher->id);
             $projectWithTeacher = Project::where('status', 1)
@@ -101,11 +103,10 @@ class SearchController extends Controller
                 })
                 ->get();
             $projects = $projectsWithoutTeacher->merge($projectWithTeacher);
-            return view('home', compact('projects', 'currs', 'groups', 'fields'));
-            
+            return view('home', compact('projects', 'currs', 'groups', 'fields', 'isInit'));
         } else {
             $projects = $projectsWithoutTeacher;
-            return view('home', compact('projects', 'currs', 'groups', 'fields'));
+            return view('home', compact('projects', 'currs', 'groups', 'fields', 'isInit'));
         }
     }
 }

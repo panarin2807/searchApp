@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('title')
-    TEST
+    ค้นหาโครงงาน
 @endsection
 
 @section('header')
@@ -11,6 +11,15 @@
 @section('content')
     @include('search')
     <hr>
+    @if ($isInit != true)
+        ผลการค้นหาทั้งหมด {{ count($projects) }} รายการ
+
+        @if (count($projects) == 0)
+            <div class="row justify-content-center">
+                <label>- ไม่พบข้อมูลโครงงาน -</label>
+            </div>
+        @endif
+    @endif
     <div class="row justify-content-center">
         @foreach ($projects as $item)
             @php
@@ -93,7 +102,7 @@
                     // `e` here contains the extra attributes
                     var currYear = String(e.date).split(" ")[3];
                     $('#endYear').datepicker('update', '');
-                    $('#endYear').datepicker('setStartDate',e.date);
+                    $('#endYear').datepicker('setStartDate', e.date);
                     console.log(currYear);
                 });
         });

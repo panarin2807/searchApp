@@ -26,10 +26,20 @@
                                 <a href="{{ route('admin.manageAdmin') }}" class="dropdown-item">Admin</a>
                             </div>
                         </li>
-                        <a href="{{ route('project.index') }}" class="nav-link">จัดการโครงงาน</a>
+                        <li class="nav-item dropdown">
+                            <a href="#" id="manageData" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" v-pre class="nav-link dropdown-toggle">จัดการข้อมูล</a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="manageData">
+                                <a href="{{ route('project.index') }}" class="dropdown-item">โครงงาน</a>
+                                <a href="#" class="dropdown-item">กลุ่ม</a>
+                                <a href="#" class="dropdown-item">หลักสูตร</a>
+                            </div>
+                        </li>
+                        {{-- <a href="{{ route('project.index') }}" class="nav-link">จัดการข้อมูล</a> --}}
                         {{-- <a href="{{ route('admin.setting') }}" class="nav-link">ตั้งค่า Config</a> --}}
                     @endif
-                    @if (Auth::guard('web')->user()->type == 1)
+                    @if (Auth::guard('web')->user()->type == 1 || Auth::guard('web')->user()->type == 2)
                         <li class="nav-item dropdown">
                             <a href="#" id="reportDropdown" class="nav-link dropdown-toggle" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>รายงาน</a>
