@@ -32,7 +32,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="manageData">
                                 <a href="{{ route('project.index') }}" class="dropdown-item">โครงงาน</a>
-                                <a href="#" class="dropdown-item">กลุ่ม</a>
+                                <a href="{{ route('admin.group.index') }}" class="dropdown-item">กลุ่ม</a>
                                 <a href="#" class="dropdown-item">หลักสูตร</a>
                             </div>
                         </li>
