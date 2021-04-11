@@ -33,7 +33,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="manageData">
                                 <a href="{{ route('project.index') }}" class="dropdown-item">โครงงาน</a>
                                 <a href="{{ route('admin.group.index') }}" class="dropdown-item">กลุ่ม</a>
-                                <a href="#" class="dropdown-item">หลักสูตร</a>
+                                <a href="{{ route('admin.curr.index') }}" class="dropdown-item">หลักสูตร</a>
                             </div>
                         </li>
                         {{-- <a href="{{ route('project.index') }}" class="nav-link">จัดการข้อมูล</a> --}}
@@ -47,7 +47,8 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportDropdown">
                                 <a href="{{ route('reportGroup') }}" class="dropdown-item">รายงานแยกตามหมวดหมู่</a>
-                                <a href="{{ route('reportTeacher') }}" class="dropdown-item">รายงานแยกตามที่ปรึกษา</a>
+                                <a href="{{ route('reportTeacher') }}"
+                                    class="dropdown-item">รายงานแยกตามที่ปรึกษา</a>
                             </div>
                         </li>
                     @endif

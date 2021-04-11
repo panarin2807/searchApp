@@ -142,12 +142,14 @@ class GroupController extends Controller
         $group = Group::find($id);
         $group->status = !$group->status;
         $message = '';
+        $status = 'status';
 
         if ($group->save()) {
             $message = 'เปลี่ยนสถานะกลุ่ม : ' . $group->id . ' เรียบร้อย';
         } else {
             $message = 'เปลี่ยนสถานะกลุ่มล้มเหลว โปรดลองใหม่ภายหลัง';
+            $status = 'error';
         }
-        return back()->with('status', $message);
+        return back()->with($status, $message);
     }
 }

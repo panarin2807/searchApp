@@ -31,6 +31,7 @@ Route::middleware(['auth', 'Admin'])->group(function () {
         Route::get('user/admin', 'UserController@getAdmin')->name('manageAdmin');
         Route::resource('user', 'UserController');
         Route::resource('group', 'GroupController');
+        Route::resource('curr', 'CurriculumController');
     });
 });
 
