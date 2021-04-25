@@ -12,7 +12,7 @@
                             @csrf
 
                             <div class="form-group row">
-                                <label for="" class="col-md-4 col-form-label text-md-right">คำนำหน้า : </label>
+                                <label for="" class="col-md-4 col-form-label text-md-right">คำนำหน้าชื่อ : </label>
                                 <div class="col-md-6">
                                     <select name="prefix" class="form-control @error('prefix') is-invalid @enderror">
                                         @foreach ($prefixes as $key => $item)
@@ -28,7 +28,7 @@
 
                             <div class="form-group row">
                                 <label for="fname"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('First name') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">ชื่อ </label>
 
                                 <div class="col-md-6">
                                     <input id="fname" type="text" class="form-control @error('fname') is-invalid @enderror"
@@ -44,7 +44,7 @@
 
                             <div class="form-group row">
                                 <label for="lname"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Last name') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">นามสกุล </label>
 
                                 <div class="col-md-6">
                                     <input id="lname" type="text" class="form-control @error('lname') is-invalid @enderror"
@@ -60,7 +60,7 @@
 
                             <div class="form-group row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">E-mail </label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -76,7 +76,7 @@
 
                             <div class="form-group row">
                                 <label for="username"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">Username </label>
 
                                 <div class="col-md-6">
                                     <input id="username" type="text"
@@ -93,7 +93,7 @@
 
                             <div class="form-group row">
                                 <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">Password </label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"

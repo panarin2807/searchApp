@@ -10,7 +10,7 @@
             <label for="curr" class="col-md-4 col-form-label text-md-right">หลักสูตร : </label>
             <div class="col-md-6">
                 <select name="curr" class="selectpicker form-control @error('curr') is-invalid @enderror"
-                    title="เลือกหลักสูตร" data-live-search="true">
+                    title="เลือกหลักสูตร" data-live-search="true" data-size="5">
                     @foreach ($curr as $item)
                         <option value="{{ $item->id }}" @if ($project->curricula_id == $item->id) selected @endif>{{ $item->name }}</option>
                     @endforeach
@@ -24,10 +24,10 @@
         </div>
 
         <div class="form-group row">
-            <label for="groups" class="col-md-4 col-form-label text-md-right">กลุ่ม : </label>
+            <label for="groups" class="col-md-4 col-form-label text-md-right">หมวดหมู่ : </label>
             <div class="col-md-6">
-                <select name="group" class="selectpicker form-control @error('group') is-invalid @enderror"
-                    title="เลือกกลุ่ม" data-live-search="true">
+                <select name="group" data-size="5" class="selectpicker form-control @error('group') is-invalid @enderror"
+                    title="เลือกหมวดหมู่" data-live-search="true">
                     @foreach ($groups as $item)
                         <option value="{{ $item->id }}" @if ($project->group_id == $item->id) selected @endif>{{ $item->name }}</option>
                     @endforeach
@@ -89,7 +89,7 @@
                 <div class="col-md-6">
                     <select name="student[]" id="student"
                         class="selectpicker form-control @error('student') is-invalid @enderror" title="เลือกนักศึกษา"
-                        data-selected-text-format="count > 3" data-live-search="true" multiple>
+                        data-selected-text-format="count > 3" data-live-search="true" data-size="5" multiple>
                         @foreach ($students as $item)
                             <option value="{{ $item->id }}" @foreach ($project->relas as $rela)  @if ($rela->user->id==$item->id)
                                 selected @endif
@@ -114,7 +114,7 @@
                     <select name="teacher[]" id="teacher"
                         class="selectpicker form-control @error('teacher') is-invalid @enderror"
                         title="เลือกอาจารย์ที่ปรึกษาหลัก" data-selected-text-format="count > 3" data-live-search="true"
-                        multiple>
+                        multiple data-size="5">
                         @foreach ($teachers as $item)
                             <option value="{{ $item->id }}" @foreach ($project->relas as $rela)  @if ($rela->user->id==$item->id)
                                 selected @endif

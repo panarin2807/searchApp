@@ -16,7 +16,7 @@
             <label for="curr" class="col-md-4 col-form-label text-md-right">หลักสูตร : </label>
             <div class="col-md-6">
                 <select name="curr" class="selectpicker form-control @error('curr') is-invalid @enderror"
-                    title="เลือกหลักสูตร" data-live-search="true">
+                    title="เลือกหลักสูตร" data-size="5" data-live-search="true">
                     @foreach ($curr as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -30,10 +30,10 @@
         </div>
 
         <div class="form-group row">
-            <label for="groups" class="col-md-4 col-form-label text-md-right">กลุ่ม : </label>
+            <label for="groups" class="col-md-4 col-form-label text-md-right">หมวดหมู่ : </label>
             <div class="col-md-6">
-                <select name="group" class="selectpicker form-control @error('group') is-invalid @enderror"
-                    title="เลือกกลุ่ม" data-live-search="true">
+                <select name="group" data-size="5" class="selectpicker form-control @error('group') is-invalid @enderror"
+                    title="เลือกหมวดหมู่" data-live-search="true">
                     @foreach ($groups as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
@@ -94,7 +94,7 @@
                 <div class="col-md-6">
                     <select name="student[]" id="student"
                         class="selectpicker form-control @error('student') is-invalid @enderror" title="เลือกนักศึกษา"
-                        data-selected-text-format="count > 3" data-live-search="true" multiple>
+                        data-selected-text-format="count > 3" data-size="5" data-live-search="true" multiple>
                         @foreach ($students as $item)
                             <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
                                 {{ $item->lname }}</option>
@@ -115,7 +115,7 @@
                 <div class="col-md-6">
                     <select name="teacher[]" id="teacher"
                         class="selectpicker form-control @error('teacher') is-invalid @enderror"
-                        title="เลือกอาจารย์ที่ปรึกษาหลัก" data-selected-text-format="count > 3" data-live-search="true"
+                        title="เลือกอาจารย์ที่ปรึกษาหลัก" data-selected-text-format="count > 3" data-size="5" data-live-search="true"
                         multiple>
                         @foreach ($teachers as $item)
                             <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
@@ -138,7 +138,7 @@
                 <label for="teacher-joint" class="col-md-4 col-form-label text-md-right">ที่ปรึกษาร่วม : </label>
                 <div class="col-md-6">
                     <select name="teacher_joint[]" id="teacher_joint" class="selectpicker form-control"
-                        title="เลือกที่ปรึกษาร่วม" data-selected-text-format="count > 3" data-live-search="true" multiple>
+                        title="เลือกที่ปรึกษาร่วม" data-size="5" data-selected-text-format="count > 3" data-live-search="true" multiple>
                         @foreach ($teachers as $item)
                             <option value="{{ $item->id }}">{{ $item->prefix->name }}{{ $item->fname }}
                                 {{ $item->lname }}</option>

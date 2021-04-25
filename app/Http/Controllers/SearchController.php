@@ -46,7 +46,7 @@ class SearchController extends Controller
         //$projects = Project::where('status', 1)->get();
         $currs = Curriculum::where('status', 1)->get();
         $groups = Group::where('status', 1)->get();
-        $fields = ['name_th' => 'ชื่อภาษาไทย', 'name_en' => 'ชื่อภาษาอังกฤษ', 'abstract' => 'บทคัดย่อ', 'advisor_joint' => 'อาจารย์ที่ปรึกษา'];
+        $fields = ['name_th' => 'ชื่อโครงงานภาษาไทย', 'name_en' => 'ชื่อโครงงานภาษาอังกฤษ', 'abstract' => 'บทคัดย่อ', 'advisor_joint' => 'อาจารย์ที่ปรึกษา'];
 
         if ($group == null) {
             $group = [];

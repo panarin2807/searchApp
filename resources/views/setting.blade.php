@@ -2,7 +2,7 @@
 
 @section('title', 'ACCOUNT SETTING')
 
-@section('header', 'ACCOUNT SETTING')
+@section('header', 'หน้าตั้งค่าบัญชี')
 
 @section('content')
     <div class="container">
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="fname" class="col-md-4 col-form-label text-md-right">{{ __('First name') }}</label>
+                        <label for="fname" class="col-md-4 col-form-label text-md-right">ชื่อ : </label>
 
                         <div class="col-md-6">
                             <input id="fname" type="text" class="form-control @error('fname') is-invalid @enderror"
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="lname" class="col-md-4 col-form-label text-md-right">{{ __('Last name') }}</label>
+                        <label for="lname" class="col-md-4 col-form-label text-md-right">นามสกุล : </label>
 
                         <div class="col-md-6">
                             <input id="lname" type="text" class="form-control @error('lname') is-invalid @enderror"
@@ -59,7 +59,7 @@
 
                     <div class="form-group row">
                         <label for="email"
-                            class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            class="col-md-4 col-form-label text-md-right">E-Mail : </label>
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-right">รหัสผ่าน : </label>
 
                         <div class="col-md-6">
                             <input id="password" type="password"
@@ -91,7 +91,7 @@
 
                     <div class="form-group row">
                         <label for="password-confirm"
-                            class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            class="col-md-4 col-form-label text-md-right">ยืนยันรหัสผ่าน : </label>
 
                         <div class="col-md-6">
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation"

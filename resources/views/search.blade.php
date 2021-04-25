@@ -34,10 +34,10 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label>กลุ่ม</label>
+                            <label>หมวดหมู่</label>
                             <select name="group[]"
                                 class="selectpicker form-control @error('group') is-invalid @enderror"
-                                title="เลือกกลุ่ม" data-selected-text-format="count > 3" data-live-search="true"
+                                title="เลือกหมวดหมู่" data-selected-text-format="count > 3" data-size="5" data-live-search="true"
                                 multiple data-actions-box="true">
                                 @foreach ($groups as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -52,7 +52,7 @@
                         <div class="form-group col-md-4">
                             <label>หลักสูตร</label>
                             <select name="curr[]" class="selectpicker form-control @error('curr') is-invalid @enderror"
-                                title="เลือกหลักสูตร" data-selected-text-format="count > 3" data-live-search="true"
+                                title="เลือกหลักสูตร" data-selected-text-format="count > 3" data-size="5" data-live-search="true"
                                 multiple data-actions-box="true">
                                 @foreach ($currs as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>

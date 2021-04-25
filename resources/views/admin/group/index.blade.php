@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
 
 @section('title')
-    จัดการข้อมูลกลุ่ม
+    จัดการข้อมูลหมวดหมู่
 @endsection
 
 @section('header')
-    จัดการข้อมูลกลุ่ม
+    จัดการข้อมูลหมวดหมู่
 @endsection
 
 @section('content')

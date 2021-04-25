@@ -23,7 +23,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="reportDropdown">
                                 <a href="{{ URL::to('admin/user') }}" class="dropdown-item">นักศึกษา</a>
                                 <a href="{{ route('admin.managePersonel') }}" class="dropdown-item">บุคลากร</a>
-                                <a href="{{ route('admin.manageAdmin') }}" class="dropdown-item">Admin</a>
+                                <a href="{{ route('admin.manageAdmin') }}" class="dropdown-item">ผู้ดูแลระบบ</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -32,7 +32,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="manageData">
                                 <a href="{{ route('project.index') }}" class="dropdown-item">โครงงาน</a>
-                                <a href="{{ route('admin.group.index') }}" class="dropdown-item">กลุ่ม</a>
+                                <a href="{{ route('admin.group.index') }}" class="dropdown-item">หมวดหมู่</a>
                                 <a href="{{ route('admin.curr.index') }}" class="dropdown-item">หลักสูตร</a>
                             </div>
                         </li>
@@ -68,7 +68,7 @@
                         @else
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::guard('web')->user()->fname }} (Admin)<span class="caret"></span>
+                                {{ Auth::guard('web')->user()->fname }} (ผู้ดูแลระบบ)<span class="caret"></span>
                             </a>
                         @endif
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

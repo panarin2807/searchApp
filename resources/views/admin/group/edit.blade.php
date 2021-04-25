@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
 
 @section('title')
-    แก้ไขข้อมูลกลุ่ม
+    แก้ไขข้อมูลหมวดหมู่
 @endsection
 
 @section('header')
-    แก้ไขข้อมูลกลุ่ม
+    แก้ไขข้อมูลหมวดหมู่
 @endsection
 
 @section('content')
