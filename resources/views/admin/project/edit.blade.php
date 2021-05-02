@@ -73,8 +73,8 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">ปีการศึกษา : </label>
             <div class="col-md-6">
-                <input id="datepicker" name="year" value="{{ $project->year }}"
-                    class="form-control @error('year') is-invalid @enderror" />
+                <input id="datepicker" name="year" value="{{ $project->year + 543 }}"
+                    class="form-control @error('year') is-invalid @enderror" autocomplete="off" />
                 @error('year')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -216,6 +216,9 @@
             window.history.back();
         }
         $(document).ready(function() {
+            var currentDate = new Date();
+            currentDate.setYear(currentDate.getFullYear() + 543);
+
             $('#form-id').submit(function(event) {
                 var selected = '';
                 var input = $('#teacher_joint').find("option:selected");
@@ -245,7 +248,9 @@
             $('#datepicker').datepicker({
                 format: 'yyyy',
                 startView: "years",
-                minViewMode: "years"
+                minViewMode: "years",
+                defaultViewDate: currentDate,
+                autoclose: true
             });
         })
 

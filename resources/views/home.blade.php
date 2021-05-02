@@ -87,15 +87,23 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+
+            var currentDate = new Date();
+            currentDate.setYear(currentDate.getFullYear() + 543);
+
             $('#startYear').datepicker({
                 format: 'yyyy',
                 startView: "years",
-                minViewMode: "years"
+                minViewMode: "years",
+                defaultViewDate : currentDate,
+                autoclose : true
             });
             $('#endYear').datepicker({
                 format: 'yyyy',
                 startView: "years",
                 minViewMode: "years",
+                defaultViewDate : currentDate,
+                autoclose : true
             });
             $('#startYear').datepicker()
                 .on('changeYear', function(e) {

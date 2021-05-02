@@ -189,6 +189,10 @@ class ProjectController extends Controller
 
         $year = $request->get('year');
 
+        $year -= 543;
+
+        // dd($year);
+
         $projectId = DB::table('projects')->insertGetId([
             'name_th' => $request->get('name_th'),
             'name_en' => $request->get('name_en'),
@@ -317,6 +321,10 @@ class ProjectController extends Controller
         $files = DB::table('project_files')->where('project_id', $id)->get();
 
         $year = $request->get('year');
+
+        $year -= 543;
+
+        // dd($year);
 
         foreach ($configs as $value) {
             if ($request->hasFile('file_' . $value->id)) {

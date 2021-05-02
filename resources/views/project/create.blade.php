@@ -79,7 +79,7 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-md-right">ปีการศึกษา : </label>
             <div class="col-md-6">
-                <input id="datepicker" name="year" class="form-control @error('year') is-invalid @enderror" />
+                <input id="datepicker" name="year" class="form-control @error('year') is-invalid @enderror" autocomplete="off"/>
                 @error('year')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -272,11 +272,16 @@
 
             });
 
+            var currentDate = new Date();
+            currentDate.setYear(currentDate.getFullYear() + 543);
+
 
             $('#datepicker').datepicker({
                 format: 'yyyy',
                 startView: "years",
-                minViewMode: "years"
+                minViewMode: "years",
+                defaultViewDate : currentDate,
+                autoclose : true
             });
 
             // var wrapperStudent = $('.student-container')

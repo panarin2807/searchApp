@@ -67,7 +67,7 @@
                         <div class="col-md-2">
                             <label>ปีเริ่มต้น</label>
                             <input id="startYear" value="{{ old('start') }}" name="start"
-                                class="form-control @error('start') is-invalid @enderror" />
+                                class="form-control @error('start') is-invalid @enderror" autocomplete="off"/>
                             @error('start')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -77,7 +77,7 @@
                         <div class="col-md-2">
                             <label>ปีสิ้นสุด</label>
                             <input id="endYear" name="end" value="{{ old('end') }}"
-                                class="form-control @error('end') is-invalid @enderror" />
+                                class="form-control @error('end') is-invalid @enderror" autocomplete="off"/>
                             @error('end')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

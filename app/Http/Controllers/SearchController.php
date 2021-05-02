@@ -69,8 +69,10 @@ class SearchController extends Controller
             }
         }
 
-        if ($start == null) $start = '1997';
-        if ($end == null) $end = date('Y');
+        if ($start == null) $start = '1997'; else $start -= 543;
+        if ($end == null) $end = date('Y'); else $end -= 543;
+
+        // dd($start,$end);
 
         $teacher = User::where([
             ['type', 1],

@@ -13,7 +13,7 @@ class ReportController extends Controller
     //
     public function showGroupReport($year = '')
     {
-        if ($year == '') $year = date('Y');
+        if ($year == '') $year = date('Y'); else $year -= 543;
 
         $groups = Group::all();
 
@@ -47,7 +47,7 @@ class ReportController extends Controller
 
     public function showTeacherReport($year = '')
     {
-        if ($year == '') $year = date('Y');
+        if ($year == '') $year = date('Y'); else $year -= 543;
 
         $groups = User::where('type', 1)->get();
 
