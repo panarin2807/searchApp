@@ -360,7 +360,7 @@ class ProjectController extends Controller
         $data = array(
             'name_th' => $request->get('name_th'),
             'name_en' => $request->get('name_en'),
-            'year' => $request->get('year'),
+            'year' => $year,
             'abstract' => $request->get('abstract'),
             // 'group_id' => $request->get('group'),
             'curricula_id' => $request->get('curr'),
