@@ -13,7 +13,11 @@ class Group extends Model
         'name', 'detail'
     ];
 
-    public function projects() {
-        return $this->hasMany(\App\Models\Project::class);
-   }
+    public function projects(){
+        return $this->belongsToMany(Project::class,'project_groups','group_id','project_id');
+    }
+
+//     public function projects() {
+//         return $this->hasMany(\App\Models\Project::class);
+//    }
 }

@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Group;
+use App\Models\Project;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,6 +21,18 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     return redirect()->action([LoginController::class, 'showLoginForm']);
+});
+
+Route::get('/test', function () {
+    $project = Project::find(1);
+    $project->groups()->sync([3,1]);
+    // $project = Project::whereHas('groups', function ($q) {
+    //     $q->wherePivotIn('id', [1, 2]);
+    // })->get();
+    // $project = Project::with('groups')->whereHas('groups', function ($q) {
+    //     $q->whereIn('group_id', [2,4]);
+    // })->get();
+    // echo json_encode($project, JSON_UNESCAPED_UNICODE);
 });
 
 Route::get('/live', 'ProjectController@search');

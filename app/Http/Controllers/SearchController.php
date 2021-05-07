@@ -69,8 +69,10 @@ class SearchController extends Controller
             }
         }
 
-        if ($start == null) $start = '1997'; else $start -= 543;
-        if ($end == null) $end = date('Y'); else $end -= 543;
+        if ($start == null) $start = '1997';
+        else $start -= 543;
+        if ($end == null) $end = date('Y');
+        else $end -= 543;
 
         // dd($start,$end);
 
@@ -81,9 +83,12 @@ class SearchController extends Controller
             $q->where('fname', 'like', '%' . $keyword . '%')->orWhere('lname', 'like', '%' . $keyword . '%');
         })->first();
 
-        $projectsWithoutTeacher = Project::where('status', 1)
+        $projectsWithoutTeacher = Project::with('groups')
+            ->whereHas('groups', function ($q) use ($group) {
+                $q->whereIn('group_id', $group);
+            })
+            ->where('status', 1)
             ->whereBetween('year', [$start, $end])
-            ->whereIn('group_id', $group)
             ->whereIn('curricula_id', $curr)
             ->where(function ($q) use ($column, $keyword) {
                 foreach ($column as $col) {
@@ -96,9 +101,12 @@ class SearchController extends Controller
 
         if ($teacher != null) {
             //return back()->with('status','teacher id : '.$teacher->id);
-            $projectWithTeacher = Project::where('status', 1)
+            $projectWithTeacher = Project::with('groups')
+                ->whereHas('groups', function ($q) use ($group) {
+                    $q->whereIn('group_id', $group);
+                })
+                ->where('status', 1)
                 ->whereBetween('year', [$start, $end])
-                ->whereIn('group_id', $group)
                 ->whereIn('curricula_id', $curr)
                 ->whereHas('relas', function ($q) use ($teacher) {
                     $q->where('project_relas.user_id', $teacher->id);

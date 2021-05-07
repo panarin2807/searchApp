@@ -27,9 +27,14 @@
             <label for="groups" class="col-md-4 col-form-label text-md-right">หมวดหมู่ : </label>
             <div class="col-md-6">
                 <select name="group" data-size="5" class="selectpicker form-control @error('group') is-invalid @enderror"
-                    title="เลือกหมวดหมู่" data-live-search="true">
+                    title="เลือกหมวดหมู่" data-live-search="true" multiple>
                     @foreach ($groups as $item)
-                        <option value="{{ $item->id }}" @if ($project->group_id == $item->id) selected @endif>{{ $item->name }}</option>
+                        <option value="{{ $item->id }}" @foreach ($project->groups as $group)  @if ($group->id==$item->id)
+                            selected @endif
+                    @endforeach
+                    >
+                    {{ $item->name }}
+                </option>
                     @endforeach
                 </select>
                 @error('group')

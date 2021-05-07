@@ -18,9 +18,11 @@ class Project extends Model
     //     return $this->hasOne(Group::class);
     // }
 
-    public function group()
+    public function groups()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsToMany(Group::class, 'project_groups', 'project_id', 'group_id');
+        //return $this->belongsToMany(Group::class, 'project_groups', 'project_id', 'group_id');
+        // return $this->belongsTo(Group::class);
         //return $this->hasOne(Curriculum::class);
     }
 

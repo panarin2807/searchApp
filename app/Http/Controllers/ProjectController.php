@@ -187,6 +187,8 @@ class ProjectController extends Controller
 
         $teachers = $request->get('teacher');
 
+        $groups = $request->get('group');
+
         $year = $request->get('year');
 
         $year -= 543;
@@ -199,7 +201,7 @@ class ProjectController extends Controller
             'year' => $year,
             'advisor_joint' => $request->input('select_teacher_joint'),
             'abstract' => $request->get('abstract'),
-            'group_id' => $request->get('group'),
+            // 'group_id' => $request->get('group'),
             'curricula_id' => $request->get('curr'),
         ]);
 
@@ -232,6 +234,10 @@ class ProjectController extends Controller
                 ]);
             }
         }
+
+        $project = Project::find($projectId);
+        //sync = delete all relate groups and insert new related
+        $project->groups()->sync($groups);
 
         foreach ($students as $key => $value) {
             DB::table('project_relas')->insert([
@@ -356,7 +362,7 @@ class ProjectController extends Controller
             'name_en' => $request->get('name_en'),
             'year' => $request->get('year'),
             'abstract' => $request->get('abstract'),
-            'group_id' => $request->get('group'),
+            // 'group_id' => $request->get('group'),
             'curricula_id' => $request->get('curr'),
         );
 
@@ -370,9 +376,15 @@ class ProjectController extends Controller
 
         $teachers = $request->get('teacher');
 
+        $groups = $request->get('group');
+
         $users = array_merge($students, $teachers);
 
         DB::table('project_relas')->where('project_id', $id)->whereNotIn('user_id', $users)->delete();
+
+        $project = Project::find($id);
+
+        $project->groups()->sync($groups);
 
         foreach ($students as $key => $value) {
             DB::table('project_relas')->upsert([
@@ -401,6 +413,7 @@ class ProjectController extends Controller
     {
         //
         $project = Project::findOrFail($id);
+        $project->groups()->sync([]);
         $files = DB::table('project_files')->where('project_id', $project->id)->get();
         //$path = explode('/', $files[0]->value);
         //Storage::deleteDirectory($path[0] . '/' . $path[1] . '/' . $path[2]);

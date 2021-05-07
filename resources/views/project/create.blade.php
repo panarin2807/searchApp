@@ -33,7 +33,7 @@
             <label for="groups" class="col-md-4 col-form-label text-md-right">หมวดหมู่ : </label>
             <div class="col-md-6">
                 <select name="group" data-size="5" class="selectpicker form-control @error('group') is-invalid @enderror"
-                    title="เลือกหมวดหมู่" data-live-search="true">
+                    title="เลือกหมวดหมู่" data-live-search="true" multiple>
                     @foreach ($groups as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                     @endforeach
